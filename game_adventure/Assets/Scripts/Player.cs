@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem; //need to install package input system, window -> package manager
 
 public class player : MonoBehaviour
 {
@@ -11,18 +12,28 @@ public class player : MonoBehaviour
 
     private Vector2 input;
 
+    Rigidbody2D rigidbody2d;
+
+
     //private Animator animator;
 
     //public LayerMask solidobjectslayer;
     //public LayerMask Interactable;
 
     //private void Awake()
-   // {
-  //      animator = GetComponent<Animator>();
-   // }
+    // {
+    //      animator = GetComponent<Animator>();
+    // }
+
+    public InputAction talkAction; //action for talking to npcs
 
     void Start()
     {
+        //enable talkAction and call TalkNPC when it happens
+        moveSpeed = 5;
+        talkAction.Enable();
+        talkAction.performed += TalkNPC;
+        rigidbody2d = GetComponent<Rigidbody2D>();
 
     }
 
@@ -33,7 +44,6 @@ public class player : MonoBehaviour
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
-            Debug.Log(input.x);
 
             if (input != Vector2.zero)
             {
@@ -99,5 +109,17 @@ public class player : MonoBehaviour
         //}
         return true;
 
+    }
+
+    void TalkNPC(InputAction.CallbackContext context)
+    {
+        //use raycasting to see if we're close enough to the NPC
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, input, 1.5f, LayerMask.GetMask("NPC"));
+        //if hit (close enough)
+        if (hit.collider != null)
+        {
+            Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+
+        }
     }
 }
