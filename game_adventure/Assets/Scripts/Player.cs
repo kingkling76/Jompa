@@ -11,15 +11,23 @@ public class player : MonoBehaviour
 
     private Vector2 input;
 
-    //private Animator animator;
+    public Animator animator;
+
+    public Inventory inventory;
+
+    private void Awake()
+    {
+        inventory = new Inventory(21);
+    }
+
 
     //public LayerMask solidobjectslayer;
     //public LayerMask Interactable;
 
     //private void Awake()
-   // {
-  //      animator = GetComponent<Animator>();
-   // }
+    // {
+    //      animator = GetComponent<Animator>();
+    // }
 
     void Start()
     {
@@ -35,6 +43,9 @@ public class player : MonoBehaviour
             input.y = Input.GetAxisRaw("Vertical");
             Debug.Log(input.x);
 
+            Vector3 direction = new Vector3(input.x, input.y);
+            AnimateMovement(direction);
+
             if (input != Vector2.zero)
             {
                 //animator.SetFloat("move_x", input.x);
@@ -42,6 +53,9 @@ public class player : MonoBehaviour
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
+
+
+
                 if (isWalkable(targetPos))
                 {
                     StartCoroutine(Move(targetPos));
@@ -55,6 +69,27 @@ public class player : MonoBehaviour
         //animator.SetBool("is_moving", is_moving);
         //if (Input.GetKeyDown(KeyCode.Z)) { interact(); }
     }
+
+
+
+    void AnimateMovement(Vector3 direction)
+    {
+        if(animator != null)
+        {
+            if(direction.magnitude > 0)
+            {
+                animator.SetBool("isMoving", true);
+                animator.SetFloat("horizontal", direction.x);
+                animator.SetFloat("vertical", direction.y);
+            }
+            else
+            {
+                animator.SetBool("isMoving", false);
+            }
+        }
+    }
+
+
     /*
      * Grej för interaction med NPC
     void interact()
@@ -86,11 +121,11 @@ public class player : MonoBehaviour
         is_moving = false;
 
     }
- //obs
+    //obs
 
 
- 
-    private bool isWalkable(Vector3 targetPos)
+
+    /*private bool isWalkable(Vector3 targetPos)
     {
         //if (Physics2D.OverlapCircle(targetPos, 0.2f, solidobjectslayer | Interactable) != null)
         //{
@@ -99,5 +134,19 @@ public class player : MonoBehaviour
         //}
         return true;
 
+    }*/
+    private bool isWalkable(Vector3 targetPos)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(targetPos, 0.2f);
+        foreach (Collider2D collider in colliders)
+        {
+            // Check if the collider belongs to a solid object
+            if (collider.CompareTag("Solid"))
+            {
+                return false;
+            }
+        }
+        return true;
     }
+
 }
