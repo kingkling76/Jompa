@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public Vector2 movement;
-    public int time;
+    public float time;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +26,10 @@ public class NPC : MonoBehaviour
         pos.x += movement.x * 3 * Time.deltaTime;
         pos.y += movement.y * 3 * Time.deltaTime;
         transform.position = pos;
-        time--;
-        if(time == 0) //The NPC should make a new decision
+        time -= Time.deltaTime;
+        if(time <= 0) //The NPC should make a new decision
         {
-            time = Random.Range(1, 5); //new moving time
+            time = Random.Range(1, 2); //new moving time
             //choose new direction to move
             movement.x = Random.Range(-1, 1);
             movement.y = Random.Range(-1, 1);
