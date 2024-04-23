@@ -20,6 +20,20 @@ public class player : MonoBehaviour
         inventory = new Inventory(10);
     }
 
+    public void DropItem(Item item)
+    {
+        Vector2 spawnLocation = transform.position;
+
+        Vector2 spawnOffset = Random.insideUnitCircle + Vector2.one;
+
+
+
+        Item droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
+
+        droppedItem.rb2d.AddForce(spawnOffset * .2f, ForceMode2D.Impulse);
+
+    }
+
 
     //public LayerMask solidobjectslayer;
     //public LayerMask Interactable;
