@@ -5,14 +5,14 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public CollectableType type;
+    public Sprite icon;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         player player = collision.GetComponent<player>();
-
-        if (player != null)
+        if (player)
         {
-            player.inventory.Add(type);
+            player.inventory.Add(this);
             Destroy(this.gameObject);
                 
         }

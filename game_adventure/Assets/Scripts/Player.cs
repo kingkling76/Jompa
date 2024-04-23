@@ -17,7 +17,7 @@ public class player : MonoBehaviour
 
     private void Awake()
     {
-        inventory = new Inventory(21);
+        inventory = new Inventory(10);
     }
 
 
@@ -41,7 +41,7 @@ public class player : MonoBehaviour
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
-            Debug.Log(input.x);
+            //Debug.Log(input.x);
 
             Vector3 direction = new Vector3(input.x, input.y);
             AnimateMovement(direction);
