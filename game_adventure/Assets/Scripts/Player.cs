@@ -13,7 +13,8 @@ public class player : MonoBehaviour
 
     //private Animator animator;
 
-    //public LayerMask solidobjectslayer;
+    public LayerMask s;
+
     //public LayerMask Interactable;
 
     //private void Awake()
@@ -33,7 +34,7 @@ public class player : MonoBehaviour
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
-            Debug.Log(input.x);
+            //Debug.Log(input.x);
 
             if (input != Vector2.zero)
             {
@@ -92,11 +93,13 @@ public class player : MonoBehaviour
  
     private bool isWalkable(Vector3 targetPos)
     {
-        //if (Physics2D.OverlapCircle(targetPos, 0.2f, solidobjectslayer | Interactable) != null)
-        //{
-        //    return false;
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, s) != null) //| Interactable) != null)
+        {
+            Debug.Log("falskt");
+            return false;
 
-        //}
+        }
+        Debug.Log("sant");
         return true;
 
     }

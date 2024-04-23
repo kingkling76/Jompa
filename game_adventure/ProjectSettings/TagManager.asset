@@ -14,7 +14,7 @@ TagManager:
   - 
   - Background
   - Area
-  - Solidobjects
+  - s
   - 
   - 
   - 
@@ -44,6 +44,12 @@ TagManager:
   - name: Background
     uniqueID: 3580134421
     locked: 0
-  - name: arena
+  - name: Background_over
+    uniqueID: 755391531
+    locked: 0
+  - name: solid
+    uniqueID: 4028548905
+    locked: 0
+  - name: decor
     uniqueID: 457365507
     locked: 0
