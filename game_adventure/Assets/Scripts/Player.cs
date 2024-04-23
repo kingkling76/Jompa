@@ -15,6 +15,9 @@ public class player : MonoBehaviour
 
     public Inventory inventory;
 
+    private Vector2 lastFacingDirection;
+
+
     private void Awake()
     {
         inventory = new Inventory(10);
@@ -26,11 +29,46 @@ public class player : MonoBehaviour
 
         Vector2 spawnOffset = Random.insideUnitCircle + Vector2.one;
 
-
         Item droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
 
         droppedItem.rb2d.AddForce(spawnOffset * .2f, ForceMode2D.Impulse);
 
+    }
+
+    public void ShootBook()
+    {
+        int bookIndex = FindBookIndexInInventory();
+
+        // Check if the book is found in the inventory
+        if (bookIndex != -1)
+        {
+            // Calculate the shooting direction based on the player's facing direction
+            Vector2 shootingDirection = input.normalized;
+
+            // If the player is not moving, use the last facing direction
+            if (shootingDirection == Vector2.zero)
+            {
+                shootingDirection = lastFacingDirection.normalized;
+            }
+
+            // Ensure the shooting direction is not zero to avoid shooting straight down
+            if (shootingDirection != Vector2.zero)
+            {
+                Vector2 spawnLocation = transform.position;
+                Vector2 spawnOffset = shootingDirection * 0.5f;
+
+                // Instantiate the book and apply force in the shooting direction
+                Item book_shot = GameManager.instance.itemManager.GetItemByType(CollectableType.BOOK);
+                Item shootBook = Instantiate(book_shot, spawnLocation + spawnOffset, Quaternion.identity);
+
+                shootBook.GetComponent<Collider2D>().isTrigger = false;
+
+                shootBook.rb2d.AddForce(shootingDirection * 5, ForceMode2D.Impulse);
+
+                // Remove the book from the inventory
+                inventory.Remove(bookIndex);
+            }
+        }
     }
 
 
@@ -50,6 +88,10 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootBook();
+        }
         if (!is_moving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
@@ -63,6 +105,8 @@ public class player : MonoBehaviour
             {
                 //animator.SetFloat("move_x", input.x);
                 //animator.SetFloat("move_y", input.y);
+                lastFacingDirection = input.normalized;
+
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
@@ -160,6 +204,20 @@ public class player : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private int FindBookIndexInInventory()
+    {
+        for (int i = 0; i < inventory.slots.Count; i++)
+        {
+            if (inventory.slots[i].type == CollectableType.BOOK)
+            {
+                return i; // Return the index of the book in the inventory
+            }
+        }
+
+        // Book not found in the inventory
+        return -1;
     }
 
 }
