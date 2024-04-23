@@ -28,5 +28,5 @@ public class Item : MonoBehaviour
 
 public enum CollectableType
 {
-    NONE, COFFEE
+    NONE, COFFEE, BOOK
 }

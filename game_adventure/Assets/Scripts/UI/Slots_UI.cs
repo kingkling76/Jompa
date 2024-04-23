@@ -11,7 +11,6 @@ public class Slots_UI : MonoBehaviour
 
     public void SetItem(Inventory.Slot slot)
     {
-        Debug.Log("Setting item in slot...");
         if (slot != null)
         {
             itemIcon.sprite = slot.icon;

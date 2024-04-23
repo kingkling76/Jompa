@@ -12,6 +12,7 @@ public class ItemManager : MonoBehaviour
     {
         foreach(Item item in collectableItems)
         {
+            Debug.Log(item);
             AddItem(item);
         }
     }
