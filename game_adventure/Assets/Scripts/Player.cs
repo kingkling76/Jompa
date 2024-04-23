@@ -14,6 +14,8 @@ public class player : MonoBehaviour
 
     Rigidbody2D rigidbody2d;
 
+    private bool talking;
+
 
     //private Animator animator;
 
@@ -25,14 +27,19 @@ public class player : MonoBehaviour
     //      animator = GetComponent<Animator>();
     // }
 
-    public InputAction talkAction; //action for talking to npcs
+    //actions for talking to npcs
+    public InputAction talkAction; 
+    public InputAction continueDialogue;
+    NPC npc;
 
     void Start()
     {
         //enable talkAction and call TalkNPC when it happens
         moveSpeed = 5;
         talkAction.Enable();
+        continueDialogue.Enable();
         talkAction.performed += TalkNPC;
+        continueDialogue.performed += StopTalking;
         rigidbody2d = GetComponent<Rigidbody2D>();
 
     }
@@ -40,27 +47,32 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (!is_moving)
+        if (talking)
+            Debug.Log("HELLO");
+        else
         {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
-
-            if (input != Vector2.zero)
+            if (!is_moving)
             {
-                //animator.SetFloat("move_x", input.x);
-                //animator.SetFloat("move_y", input.y);
-                var targetPos = transform.position;
-                targetPos.x += input.x;
-                targetPos.y += input.y;
-                if (isWalkable(targetPos))
-                {
-                    StartCoroutine(Move(targetPos));
+                input.x = Input.GetAxisRaw("Horizontal");
+                input.y = Input.GetAxisRaw("Vertical");
 
+                if (input != Vector2.zero)
+                {
+                    //animator.SetFloat("move_x", input.x);
+                    //animator.SetFloat("move_y", input.y);
+                    var targetPos = transform.position;
+                    targetPos.x += input.x;
+                    targetPos.y += input.y;
+                    if (isWalkable(targetPos))
+                    {
+                        StartCoroutine(Move(targetPos));
+
+                    }
+
+                    //StartCoroutine(Move(targetPos));
                 }
 
-                //StartCoroutine(Move(targetPos));
             }
-
         }
         //animator.SetBool("is_moving", is_moving);
         //if (Input.GetKeyDown(KeyCode.Z)) { interact(); }
@@ -118,8 +130,24 @@ public class player : MonoBehaviour
         //if hit (close enough)
         if (hit.collider != null)
         {
-            Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
-
+            NPC npc = hit.collider.GetComponent<NPC>();
+            npc.Talk();
+            talking = true;
         }
+    }
+
+    //stop talking to the NPC
+    void StopTalking(InputAction.CallbackContext context)
+    {
+        //set talking to false, the ray will still hit the same NPC
+        if (talking)
+        {
+            talking = false;
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, input, 1.5f, LayerMask.GetMask("NPC"));
+            npc = hit.collider.GetComponent<NPC>();
+            npc.ClearText();
+        }
+        else
+            return;
     }
 }

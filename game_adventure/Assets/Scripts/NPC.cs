@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class NPC : MonoBehaviour
     public bool moved; 
     Rigidbody2D rigidbody2d;
     Vector2 move;
+
+    //for the text box
+    public GameObject dialoguePanel;
+    public Text dialogueText;
+    public string[] dialogue;
+    int index;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +28,10 @@ public class NPC : MonoBehaviour
 
         //get the rigidbody component
         rigidbody2d = GetComponent<Rigidbody2D>();
+
+        //index and options for the dialogue
+        dialogue = new string[] { "Hej", "Barev", "Ni Hao", "Yassoo", "Namaste", "Salam", "Hola", "Merhaba", "Privet", "Zdravo" };
+        index = 0;
     }
 
     // Update is called once per frame
@@ -30,7 +42,11 @@ public class NPC : MonoBehaviour
     //don't want jittering, FixedUpdate has same freq as the physics system
     void FixedUpdate()
     {
-        Wander();
+        if (dialoguePanel.activeInHierarchy)
+            ;
+        else
+            Wander();
+
     }
 
     void Wander()
@@ -60,6 +76,29 @@ public class NPC : MonoBehaviour
                     moved = true;
             }
 
+        }
+    }
+
+    public void Talk()
+    {
+        dialoguePanel.SetActive(true);
+        index = Random.Range(0, 11);
+        StartCoroutine(Typing());
+    }
+
+    public void ClearText()
+    {
+        dialogueText.text = "";
+        index = 0;
+        dialoguePanel.SetActive(false);
+    }
+
+    IEnumerator Typing()
+    {
+        foreach(char letter in dialogue[index].ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.06f);
         }
     }
 }
