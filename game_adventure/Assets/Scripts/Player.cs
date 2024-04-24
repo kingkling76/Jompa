@@ -18,10 +18,15 @@ public class player : MonoBehaviour
 
     public static player instance;
 
+    public int MaxHealth = 100;
+
+    public int health;
+
 
     private void Awake()
     {
         inventory = new Inventory(10);
+        health = MaxHealth;
 
         //Singelton pattern
         if (instance == null)
@@ -78,6 +83,17 @@ public class player : MonoBehaviour
         }
     }
 
+    public void DrinkCoffee()
+    {
+        int coffeeIndex = FindCoffeeIndexInInventory();
+
+        if(coffeeIndex != -1)
+        {
+            this.moveSpeed = this.moveSpeed * 1.25f;
+            inventory.Remove(coffeeIndex);
+        }
+    }
+
 
     //public LayerMask solidobjectslayer;
     //public LayerMask Interactable;
@@ -98,6 +114,10 @@ public class player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ShootBook();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DrinkCoffee();
         }
         if (!is_moving)
         {
@@ -133,7 +153,6 @@ public class player : MonoBehaviour
         //animator.SetBool("is_moving", is_moving);
         //if (Input.GetKeyDown(KeyCode.Z)) { interact(); }
     }
-
 
 
     void AnimateMovement(Vector3 direction)
@@ -225,6 +244,41 @@ public class player : MonoBehaviour
 
         // Book not found in the inventory
         return -1;
+    }
+
+    private int FindCoffeeIndexInInventory()
+    {
+        for (int i = 0; i < inventory.slots.Count; i++)
+        {
+            if (inventory.slots[i].type == CollectableType.COFFEE)
+            {
+                return i; // Return the index of the book in the inventory
+            }
+        }
+
+        // Book not found in the inventory
+        return -1;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage(10); // Adjust the amount of damage as needed
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        // Handle player death here, such as game over screen or respawn logic
     }
 
 }
