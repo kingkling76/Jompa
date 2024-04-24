@@ -51,11 +51,11 @@ public class NPC : MonoBehaviour
     }
 
     //don't want jittering, FixedUpdate has same freq as the physics system
-    int k;
     void FixedUpdate()
     {
-        if (dialoguePanel.activeInHierarchy)
-            k=1;
+        //dialoguePanel.activeInHierarchy || dialoguePanel == null
+        if (1==0)
+            ;
         else
             Wander();
 
@@ -128,7 +128,7 @@ public class NPC : MonoBehaviour
 }
 
 /*TODO
- * G?r s? man kan interagera med NPC
- * Dialogruta n?r man interagerar
- * Kanske: fixa kollisionen diagonalt med v?gg, s? NPCn inte "glider" l?ngs med v?ggen
+ * G�r s� man kan interagera med NPC
+ * Dialogruta n�r man interagerar
+ * Kanske: fixa kollisionen diagonalt med v�gg, s� NPCn inte "glider" l�ngs med v�ggen
 */

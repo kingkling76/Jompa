@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.InputSystem; //need to install package input system, window -> package manager
+
 
 public class player : MonoBehaviour
 {
@@ -22,17 +22,12 @@ public class player : MonoBehaviour
 
     public Vector2 input;
 
-    
+    private bool talking;
 
 
     //private Animator animator;
 
     public LayerMask s;
-
-
-
-    private bool talking;
-
 
     public Animator animator;
 
@@ -141,7 +136,6 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-
     }
 
     public void FixedUpdate()
