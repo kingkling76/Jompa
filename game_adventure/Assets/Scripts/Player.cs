@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    // Start is called before the first frame update
     public float moveSpeed;
 
     private bool is_moving;
@@ -17,10 +16,22 @@ public class player : MonoBehaviour
 
     private Vector2 lastFacingDirection;
 
+    public static player instance;
+
 
     private void Awake()
     {
         inventory = new Inventory(10);
+
+        //Singelton pattern
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void DropItem(Item item)
@@ -39,10 +50,8 @@ public class player : MonoBehaviour
     {
         int bookIndex = FindBookIndexInInventory();
 
-        // Check if the book is found in the inventory
         if (bookIndex != -1)
         {
-            // Calculate the shooting direction based on the player's facing direction
             Vector2 shootingDirection = input.normalized;
 
             // If the player is not moving, use the last facing direction
@@ -51,21 +60,19 @@ public class player : MonoBehaviour
                 shootingDirection = lastFacingDirection.normalized;
             }
 
-            // Ensure the shooting direction is not zero to avoid shooting straight down
             if (shootingDirection != Vector2.zero)
             {
                 Vector2 spawnLocation = transform.position;
-                Vector2 spawnOffset = shootingDirection * 0.5f;
+                Vector2 spawnOffset = shootingDirection * 1.5f;
 
-                // Instantiate the book and apply force in the shooting direction
                 Item book_shot = GameManager.instance.itemManager.GetItemByType(CollectableType.BOOK);
                 Item shootBook = Instantiate(book_shot, spawnLocation + spawnOffset, Quaternion.identity);
 
-                shootBook.GetComponent<Collider2D>().isTrigger = false;
+                //shootBook.GetComponent<Collider2D>().isTrigger = false;
+                shootBook.tag = "ShotBook";
 
                 shootBook.rb2d.AddForce(shootingDirection * 5, ForceMode2D.Impulse);
 
-                // Remove the book from the inventory
                 inventory.Remove(bookIndex);
             }
         }
