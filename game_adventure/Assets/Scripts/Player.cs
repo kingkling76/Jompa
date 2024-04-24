@@ -7,9 +7,14 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     public float moveSpeed;
 
-    private bool is_moving;
+    public bool is_moving;
 
     private Vector2 input;
+
+    public Vector3 targetPos;
+
+    public float targetTime;
+
 
     //private Animator animator;
 
@@ -18,10 +23,24 @@ public class player : MonoBehaviour
     //public LayerMask Interactable;
 
     //private void Awake()
-   // {
-  //      animator = GetComponent<Animator>();
-   // }
+    // {
+    //      animator = GetComponent<Animator>();
+    // }
 
+    public static player instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
     void Start()
     {
 
@@ -30,6 +49,7 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        Debug.Log(is_moving);
         if (!is_moving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
@@ -40,9 +60,12 @@ public class player : MonoBehaviour
             {
                 //animator.SetFloat("move_x", input.x);
                 //animator.SetFloat("move_y", input.y);
-                var targetPos = transform.position;
+                targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
+
+                
+                        
                 if (isWalkable(targetPos))
                 {
                     StartCoroutine(Move(targetPos));
@@ -75,13 +98,18 @@ public class player : MonoBehaviour
     IEnumerator Move(Vector3 targetPos)
     {
         is_moving = true;
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        //while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon && is_moving == true)
+
+        int i = 10;
+        for(; i < 100;)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            Debug.Log("Fast move");
             yield return null;
 
 
-
+            i++;
         }
         transform.position = targetPos;
         is_moving = false;
