@@ -27,19 +27,24 @@ public class player : MonoBehaviour
     //      animator = GetComponent<Animator>();
     // }
 
-    //actions for talking to npcs
+    //actions for talking to npcs etc
     public InputAction talkAction; 
     public InputAction continueDialogue;
+    public InputAction MoveAction;
+    Vector2 move;
     NPC npc;
 
     void Start()
     {
         //enable talkAction and call TalkNPC when it happens
         moveSpeed = 5;
+
+        //enable all inputaction
         talkAction.Enable();
         continueDialogue.Enable();
+        MoveAction.Enable();
+
         talkAction.performed += TalkNPC;
-        continueDialogue.performed += StopTalking;
         rigidbody2d = GetComponent<Rigidbody2D>();
 
     }
@@ -47,35 +52,19 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+     
+    }
+
+    public void FixedUpdate()
+    {
         if (talking)
             Debug.Log("HELLO");
         else
         {
-            if (!is_moving)
-            {
-                input.x = Input.GetAxisRaw("Horizontal");
-                input.y = Input.GetAxisRaw("Vertical");
-
-                if (input != Vector2.zero)
-                {
-                    //animator.SetFloat("move_x", input.x);
-                    //animator.SetFloat("move_y", input.y);
-                    var targetPos = transform.position;
-                    targetPos.x += input.x;
-                    targetPos.y += input.y;
-                    if (isWalkable(targetPos))
-                    {
-                        StartCoroutine(Move(targetPos));
-
-                    }
-
-                    //StartCoroutine(Move(targetPos));
-                }
-
-            }
+            move = MoveAction.ReadValue<Vector2>();
+            Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
+            rigidbody2d.MovePosition(position);
         }
-        //animator.SetBool("is_moving", is_moving);
-        //if (Input.GetKeyDown(KeyCode.Z)) { interact(); }
     }
     /*
      * Grej för interaction med NPC
@@ -93,21 +82,22 @@ public class player : MonoBehaviour
     }
     */
 
-    IEnumerator Move(Vector3 targetPos)
+   /* IEnumerator Move(Vector3 targetPos)
     {
         is_moving = true;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            rigidbody2d.MovePosition(targetPos);
             yield return null;
 
 
 
         }
-        transform.position = targetPos;
+        //transform.position = targetPos;
         is_moving = false;
 
-    }
+    }*/
  //obs
 
 
@@ -126,28 +116,24 @@ public class player : MonoBehaviour
     void TalkNPC(InputAction.CallbackContext context)
     {
         //use raycasting to see if we're close enough to the NPC
-        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, input, 1.5f, LayerMask.GetMask("NPC"));
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
         //if hit (close enough)
         if (hit.collider != null)
         {
-            NPC npc = hit.collider.GetComponent<NPC>();
-            npc.Talk();
-            talking = true;
-        }
-    }
+            Debug.Log("TRÄFF");
+            Debug.Log("Hit: " + hit.collider.name);
+            if (hit.collider.name == "NPC")
+            {
+                NPC npc = hit.collider.GetComponent<NPC>();
+                npc.Talk();
+            }
 
-    //stop talking to the NPC
-    void StopTalking(InputAction.CallbackContext context)
-    {
-        //set talking to false, the ray will still hit the same NPC
-        if (talking)
-        {
-            talking = false;
-            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, input, 1.5f, LayerMask.GetMask("NPC"));
-            npc = hit.collider.GetComponent<NPC>();
-            npc.ClearText();
+            else if(hit.collider.name == "Shopkeeper")
+            {
+                Debug.Log("HEJEHEJHEJHEJHEJHEJ");
+                Shopkeeper sk = hit.collider.GetComponent<Shopkeeper>();
+                sk.Talk();
+            }
         }
-        else
-            return;
     }
 }

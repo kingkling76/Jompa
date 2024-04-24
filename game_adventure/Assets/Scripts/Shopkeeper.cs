@@ -13,20 +13,19 @@ public class Shopkeeper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        dialogue = new string[] { "Hello, I'm Kling" };
     }
 
     public void Talk()
     {
         dialoguePanel.SetActive(true);
-        index = Random.Range(0, 11);
         StartCoroutine(Typing());
     }
 
     //enumerator for typing
     IEnumerator Typing()
     {
-        foreach (char letter in dialogue[index].ToCharArray())
+        foreach (char letter in dialogue[0].ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.06f);

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem; //need to install package input system, window -> package manager
+
 
 public class NPC : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class NPC : MonoBehaviour
     public Text dialogueText;
     public string[] dialogue;
     int index;
+
+    //InputActions for button presses
+    public InputAction continueTalking;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +37,12 @@ public class NPC : MonoBehaviour
         //index and options for the dialogue
         dialogue = new string[] { "Hej", "Barev", "Ni Hao", "Yassoo", "Namaste", "Salam", "Hola", "Merhaba", "Privet", "Zdravo" };
         index = 0;
+
+        //enable input actions
+        continueTalking.Enable();
+
+        //bind input actions to functions
+        continueTalking.performed += StopTalking;
     }
 
     // Update is called once per frame
@@ -82,7 +93,7 @@ public class NPC : MonoBehaviour
     public void Talk()
     {
         dialoguePanel.SetActive(true);
-        index = Random.Range(0, 11);
+        index = Random.Range(0, 10);
         StartCoroutine(Typing());
     }
 
@@ -100,6 +111,18 @@ public class NPC : MonoBehaviour
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.06f);
         }
+    }
+
+    void StopTalking(InputAction.CallbackContext context)
+    {
+        //if the panel is open, close it and clear text 
+        if (dialoguePanel.activeInHierarchy) 
+        {
+            ClearText();
+            index = 0;
+        }
+        else
+            return;
     }
 }
 
