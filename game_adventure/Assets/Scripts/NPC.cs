@@ -119,6 +119,7 @@ public class NPC : MonoBehaviour
         //if the panel is open, close it and clear text 
         if (dialoguePanel.activeInHierarchy) 
         {
+            player.instance.talking = false;
             ClearText();
             index = 0;
         }

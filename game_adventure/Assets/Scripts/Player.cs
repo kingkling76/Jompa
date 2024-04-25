@@ -22,7 +22,7 @@ public class player : MonoBehaviour
 
     public Vector2 input;
 
-    private bool talking;
+    public bool talking;
 
 
     //private Animator animator;
@@ -35,7 +35,7 @@ public class player : MonoBehaviour
 
     private Vector2 lastFacingDirection;
 
-    public static player instance;
+    public static player instance {get; private set;}
 
     public int MaxHealth = 100;
 
@@ -212,7 +212,7 @@ public class player : MonoBehaviour
     void TalkNPC(InputAction.CallbackContext context)
     {
         //use raycasting to see if we're close enough to the NPC
-        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("s"));
         //if hit (close enough)
         if (hit.collider != null)
         {
@@ -220,6 +220,7 @@ public class player : MonoBehaviour
             Debug.Log("Hit: " + hit.collider.name);
             if (hit.collider.name == "NPC")
             {
+                talking = true;
                 NPC npc = hit.collider.GetComponent<NPC>();
                 npc.Talk();
             }
@@ -227,6 +228,7 @@ public class player : MonoBehaviour
             else if (hit.collider.name == "Shopkeeper")
             {
                 Debug.Log("HEJEHEJHEJHEJHEJHEJ");
+                talking = true;
                 Shopkeeper sk = hit.collider.GetComponent<Shopkeeper>();
                 sk.Talk();
             }
