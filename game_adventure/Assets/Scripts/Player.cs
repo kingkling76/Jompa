@@ -226,7 +226,7 @@ public class player : MonoBehaviour
         {
             Debug.Log("TRÄFF");
             Debug.Log("Hit: " + hit.collider.name);
-            if (hit.collider.name == "NPC")
+            if (hit.collider.CompareTag("NPC"))
             {
                 talking = true;
                 NPC npc = hit.collider.GetComponent<NPC>();

@@ -92,6 +92,7 @@ public class NPC : MonoBehaviour
 
     public void Talk()
     {
+        Debug.Log("NPC TALK HAS BEEN CALLED\n");
         if (dialoguePanel.activeInHierarchy)
             return;
         dialoguePanel.SetActive(true);
