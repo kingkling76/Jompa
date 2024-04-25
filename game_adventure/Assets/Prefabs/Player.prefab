@@ -154,9 +154,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  is_moving: 0
+  targetPos: {x: 0, y: 0, z: 0}
+  targetTime: 0
+  MoveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1fbbea8b-7e71-45e0-bcbe-df63d9a4a1d0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input: {x: 0, y: 0}
+  talking: 0
+  s:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 8848731062483829530}
   inventory:
     slots: []
+  MaxHealth: 100
+  health: 0
+  talkAction:
+    m_Name: Talk
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 05230b6b-8ce2-44c5-bf29-898ef418f7af
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  continueDialogue:
+    m_Name: Continue Dialogue
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 74ac4998-2b5f-4124-ad5c-0e2cf272975a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!61 &1279869982270117024
 BoxCollider2D:
   m_ObjectHideFlags: 0

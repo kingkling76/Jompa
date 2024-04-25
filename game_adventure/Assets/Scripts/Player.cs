@@ -60,7 +60,9 @@ public class player : MonoBehaviour
 
     public void DropItem(Item item)
     {
-        Vector2 spawnLocation = transform.position;
+        //Vector2 spawnLocation = transform.position;
+
+        Vector2 spawnLocation = rigidbody2d.position;
 
         Vector2 spawnOffset = Random.insideUnitCircle + Vector2.one;
 
@@ -76,7 +78,7 @@ public class player : MonoBehaviour
 
         if (bookIndex != -1)
         {
-            Vector2 shootingDirection = input.normalized;
+            Vector2 shootingDirection = move.normalized;
 
             // If the player is not moving, use the last facing direction
             if (shootingDirection == Vector2.zero)
@@ -86,7 +88,8 @@ public class player : MonoBehaviour
 
             if (shootingDirection != Vector2.zero)
             {
-                Vector2 spawnLocation = transform.position;
+                //Vector2 spawnLocation = transform.position;
+                Vector2 spawnLocation = rigidbody2d.position;
                 Vector2 spawnOffset = shootingDirection * 1.5f;
 
                 Item book_shot = GameManager.instance.itemManager.GetItemByType(CollectableType.BOOK);
@@ -136,6 +139,14 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootBook();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DrinkCoffee();
+        }
     }
 
     public void FixedUpdate()
@@ -145,32 +156,28 @@ public class player : MonoBehaviour
         else
         {
             move = MoveAction.ReadValue<Vector2>();
-            Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
+            is_moving = true;
+            Vector2 position = (Vector2)transform.position + move * moveSpeed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
+            is_moving = false;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ShootBook();
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DrinkCoffee();
-        }
+
         if (!is_moving)
         {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
+
+            move.x = Input.GetAxisRaw("Horizontal");
+            move.y = Input.GetAxisRaw("Vertical");
             //Debug.Log(input.x);
 
-            Vector3 direction = new Vector3(input.x, input.y);
+            Vector3 direction = new Vector3(move.x, move.y);
             AnimateMovement(direction);
 
-            if (input != Vector2.zero)
+            if (move != Vector2.zero)
             {
                 //animator.SetFloat("move_x", input.x);
                 //animator.SetFloat("move_y", input.y);
-                lastFacingDirection = input.normalized;
-
+                
+                lastFacingDirection = move.normalized;
                 //StartCoroutine(Move(targetPos));
             }
 
