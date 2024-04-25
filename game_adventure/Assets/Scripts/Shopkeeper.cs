@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class Shopkeeper : MonoBehaviour
 {
     //for the text box
-    public GameObject dialoguePanel;
-    public Text dialogueText;
+    public GameObject Shop;
+    public Text ShopText;
     public string[] dialogue;
     
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class Shopkeeper : MonoBehaviour
 
     public void Talk()
     {
-        dialoguePanel.SetActive(true);
+        Shop.SetActive(true);
         StartCoroutine(Typing());
     }
 
@@ -27,7 +27,7 @@ public class Shopkeeper : MonoBehaviour
     {
         foreach (char letter in dialogue[0].ToCharArray())
         {
-            dialogueText.text += letter;
+            ShopText.text += letter;
             yield return new WaitForSeconds(0.06f);
         }
     }
@@ -38,8 +38,8 @@ public class Shopkeeper : MonoBehaviour
         
     }
 
-    public void Hello()
+    public void ShopUI()
     {
-
+        Shop.SetActive(true);
     }
 }

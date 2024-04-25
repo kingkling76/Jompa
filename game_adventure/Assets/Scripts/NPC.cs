@@ -53,8 +53,7 @@ public class NPC : MonoBehaviour
     //don't want jittering, FixedUpdate has same freq as the physics system
     void FixedUpdate()
     {
-        //dialoguePanel.activeInHierarchy || dialoguePanel == null
-        if (1==0)
+        if (dialoguePanel.activeInHierarchy)
             ;
         else
             Wander();

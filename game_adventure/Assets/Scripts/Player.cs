@@ -212,7 +212,7 @@ public class player : MonoBehaviour
     void TalkNPC(InputAction.CallbackContext context)
     {
         //use raycasting to see if we're close enough to the NPC
-        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("s"));
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
         //if hit (close enough)
         if (hit.collider != null)
         {
@@ -230,7 +230,7 @@ public class player : MonoBehaviour
                 Debug.Log("HEJEHEJHEJHEJHEJHEJ");
                 talking = true;
                 Shopkeeper sk = hit.collider.GetComponent<Shopkeeper>();
-                sk.Talk();
+                sk.ShopUI();
             }
         }
     }
