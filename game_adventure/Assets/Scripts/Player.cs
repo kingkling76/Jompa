@@ -35,6 +35,8 @@ public class player : MonoBehaviour
 
     private Vector2 lastFacingDirection;
 
+    private Vector2 lastNPCdir;
+
     public static player instance {get; private set;}
 
     public int MaxHealth = 100;
@@ -145,6 +147,8 @@ public class player : MonoBehaviour
         else
         {
             move = MoveAction.ReadValue<Vector2>();
+            if (move != Vector2.zero)
+                lastNPCdir = move;
             Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
             rigidbody2d.MovePosition(position);
         }
@@ -212,7 +216,11 @@ public class player : MonoBehaviour
     void TalkNPC(InputAction.CallbackContext context)
     {
         //use raycasting to see if we're close enough to the NPC
-        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
+        RaycastHit2D hit;
+        if (move == Vector2.zero)
+            hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lastNPCdir, 1.5f, LayerMask.GetMask("NPC"));
+        else
+            hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
         //if hit (close enough)
         if (hit.collider != null)
         {
