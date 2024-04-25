@@ -9,7 +9,8 @@ public class Shopkeeper : MonoBehaviour
     public GameObject Shop;
     public Text ShopText;
     public string[] dialogue;
-    
+    public GameObject Manager;
+    //
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,6 @@ public class Shopkeeper : MonoBehaviour
 
     public void ShopUI()
     {
-        Shop.SetActive(true);
+        Manager.GetComponent<ShopManagerScript>().ToggleShop();
     }
 }

@@ -143,7 +143,7 @@ public class player : MonoBehaviour
     public void FixedUpdate()
     {
         if (talking)
-            Debug.Log("HELLO");
+            ;
         else
         {
             move = MoveAction.ReadValue<Vector2>();
