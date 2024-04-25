@@ -92,6 +92,8 @@ public class NPC : MonoBehaviour
 
     public void Talk()
     {
+        if (dialoguePanel.activeInHierarchy)
+            return;
         dialoguePanel.SetActive(true);
         index = Random.Range(0, 10);
         StartCoroutine(Typing());
