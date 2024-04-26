@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+using ItemEnum;
+
 public class ShopManagerScript : MonoBehaviour
 {
 
     public int[,] shopItems = new int[5,5];
-    public float coins;
+    //public float coins;
     public Text CoinsTxt;
     public GameObject shop;
+    public Item CoffeeItem;
+    public Item BookItem;
     // Start is called before the first frame update
     void Start()
     {
-        CoinsTxt.text = "Coins: " + coins.ToString(); 
+        CoinsTxt.text = "Coins: " + player.instance.coins.ToString(); 
         
         //Item IDs
         shopItems[1, 1] = 1;
@@ -35,12 +39,18 @@ public class ShopManagerScript : MonoBehaviour
     public void Buy()
     {
         GameObject buttonRef = GameObject.FindGameObjectWithTag("Event").GetComponent<EventSystem>().currentSelectedGameObject;
-
-        if (coins >= shopItems[2, buttonRef.GetComponent<ButtonInfo>().itemID])
+        if (player.instance.coins >= shopItems[2, buttonRef.GetComponent<ButtonInfo>().itemID])
         {
-            coins -= shopItems[2, buttonRef.GetComponent<ButtonInfo>().itemID];
-            CoinsTxt.text = "Coins" + coins;
-
+            player.instance.coins -= shopItems[2, buttonRef.GetComponent<ButtonInfo>().itemID];
+            CoinsTxt.text = "Coins: " + player.instance.coins.ToString();
+            if (buttonRef.GetComponent<ButtonInfo>().itemID == 1)
+            {
+                player.instance.inventory.Add(CoffeeItem);
+            }
+            else if (buttonRef.GetComponent<ButtonInfo>().itemID == 2)
+            {
+                player.instance.inventory.Add(BookItem);
+            }
         }
     }
 
@@ -58,5 +68,5 @@ public class ShopManagerScript : MonoBehaviour
             CoinsTxt.gameObject.SetActive(false);
             player.instance.talking = false;
         }
-        }
+    }
 }

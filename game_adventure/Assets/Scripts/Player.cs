@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; //need to install package input system, window -> package manager
 
+using ItemEnum;
 
 public class player : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class player : MonoBehaviour
     public int MaxHealth = 100;
 
     public int health;
+
+    public int coins = 50;
 
 
     private void Awake()

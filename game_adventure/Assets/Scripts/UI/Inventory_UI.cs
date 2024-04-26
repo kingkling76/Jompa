@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using ItemEnum;
+
 public class Inventory_UI : MonoBehaviour
 {
     public GameObject inventoryPanel;
