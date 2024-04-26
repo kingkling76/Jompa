@@ -10,7 +10,7 @@ public class player : MonoBehaviour
 
     public bool is_moving;
 
-    private Vector2 move;
+    public Vector2 move;
 
     public Vector3 targetPos;
 
@@ -33,7 +33,7 @@ public class player : MonoBehaviour
 
     public Inventory inventory;
 
-    private Vector2 lastFacingDirection;
+    public Vector2 lastFacingDirection;
 
     public static player instance {get; private set;}
 
@@ -98,10 +98,42 @@ public class player : MonoBehaviour
                 //shootBook.GetComponent<Collider2D>().isTrigger = false;
                 shootBook.tag = "ShotBook";
 
-                shootBook.rb2d.AddForce(shootingDirection * 5, ForceMode2D.Impulse);
+                shootBook.rb2d.AddForce(shootingDirection * (moveSpeed+2), ForceMode2D.Impulse);
 
                 inventory.Remove(bookIndex);
             }
+        }
+    }
+
+    public void PennAttack()
+    {
+
+        Vector2 attackDirection = move.normalized;
+
+        if (attackDirection == Vector2.zero)
+        {
+            attackDirection = lastFacingDirection.normalized;
+        }
+
+        if (attackDirection != Vector2.zero)
+        {
+            //Vector2 spawnLocation = transform.position;
+            Vector2 spawnLocation = rigidbody2d.position;
+            Vector2 spawnOffset = attackDirection * 0.5f;
+
+            Item penn_attack = GameManager.instance.itemManager.GetItemByType(CollectableType.PENN);
+            Item penn = Instantiate(penn_attack, spawnLocation + spawnOffset, Quaternion.identity);
+
+
+            penn.rb2d.AddForce(attackDirection * (moveSpeed+2), ForceMode2D.Impulse);
+
+            float angle = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg + 270;
+
+            // Rotate the penn object to face the attack direction
+            penn.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            Destroy(penn.gameObject, 0.2f);
+
         }
     }
 
@@ -139,13 +171,17 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             ShootBook();
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
             DrinkCoffee();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PennAttack();
         }
     }
 
@@ -282,7 +318,6 @@ public class player : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-            Debug.Log("Damage!");
             TakeDamage(10);
         }
     }

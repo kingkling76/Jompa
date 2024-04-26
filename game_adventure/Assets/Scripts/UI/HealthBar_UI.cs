@@ -12,7 +12,6 @@ public class HealthBar_UI : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(player.instance.health);
         float fillAmount = (float)player.instance.health / player.instance.MaxHealth;
         barImage.fillAmount = fillAmount;
     }

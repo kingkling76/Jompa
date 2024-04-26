@@ -27,5 +27,13 @@ public class Enemy : MonoBehaviour
             }
 
         }
+        if (other.CompareTag("Penn"))
+        {
+            health = health - 1;
+            if (health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         player player = collision.GetComponent<player>();
-        if (player)
+        if (player && this.type != CollectableType.PENN)
         {
             player.inventory.Add(this);
             Destroy(this.gameObject);
@@ -28,5 +28,5 @@ public class Item : MonoBehaviour
 
 public enum CollectableType
 {
-    NONE, COFFEE, BOOK
+    NONE, COFFEE, BOOK, PENN
 }
