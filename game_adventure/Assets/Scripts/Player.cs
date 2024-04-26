@@ -30,8 +30,6 @@ public class player : MonoBehaviour
 
     public LayerMask s;
 
-    public Animator animator;
-
     public Inventory inventory;
 
     private Vector2 lastFacingDirection;
@@ -45,6 +43,8 @@ public class player : MonoBehaviour
     public int health;
 
     public int coins = 50;
+
+    private Animator animator;
 
 
     private void Awake()
@@ -61,6 +61,8 @@ public class player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        animator = GetComponent<Animator>();
     }
 
     public void DropItem(Item item)
@@ -146,10 +148,22 @@ public class player : MonoBehaviour
     public void FixedUpdate()
     {
         if (talking)
-            ;
+            animator.SetBool("IsWalking", false);
+
         else
         {
             move = MoveAction.ReadValue<Vector2>();
+            if (move != Vector2.zero)
+            {
+                animator.SetFloat("X", move.x);
+                animator.SetFloat("Y", move.y);
+
+                animator.SetBool("IsWalking", true);
+            }
+            else
+            {
+                animator.SetBool("IsWalking", false);
+            }
             if (move != Vector2.zero)
                 lastNPCdir = move;
             Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
@@ -168,9 +182,6 @@ public class player : MonoBehaviour
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
             //Debug.Log(input.x);
-
-            Vector3 direction = new Vector3(input.x, input.y);
-            AnimateMovement(direction);
 
             if (input != Vector2.zero)
             {
