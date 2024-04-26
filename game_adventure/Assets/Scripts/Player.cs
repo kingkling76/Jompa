@@ -17,6 +17,7 @@ public class player : MonoBehaviour
     public float targetTime;
 
     public InputAction MoveAction;
+   
 
     Rigidbody2D rigidbody2d;
 
@@ -24,6 +25,7 @@ public class player : MonoBehaviour
 
     public bool talking;
 
+    public GameObject menu;
 
     //private Animator animator;
 
@@ -116,6 +118,7 @@ public class player : MonoBehaviour
     //actions for talking to npcs etc
     public InputAction talkAction;
     public InputAction continueDialogue;
+    public InputAction open_menu;
     NPC npc;
 
     void Start()
@@ -125,6 +128,8 @@ public class player : MonoBehaviour
 
         //enable all inputaction
         talkAction.Enable();
+        open_menu.Enable();
+        MoveAction.Enable();
         continueDialogue.Enable();
         MoveAction.Enable();
 
@@ -156,7 +161,13 @@ public class player : MonoBehaviour
         {
             DrinkCoffee();
         }
-        if (!is_moving)
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("Här");
+            menu.SetActive(true); 
+
+        }
+            if (!is_moving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
