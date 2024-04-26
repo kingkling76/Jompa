@@ -282,6 +282,7 @@ public class player : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
+            Debug.Log("Damage!");
             TakeDamage(10);
         }
     }
