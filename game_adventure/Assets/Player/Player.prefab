@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 457365507
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1404395133, guid: fe61f179b122f4642b9003d09fc47c04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,6 +100,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  is_moving: 0
+  move: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  targetTime: 0
+  MoveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 387b0336-609b-4f98-b515-fc608d0af25c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input: {x: 0, y: 0}
+  talking: 0
+  s:
+    serializedVersion: 2
+    m_Bits: 0
+  animator: {fileID: 0}
+  inventory:
+    slots: []
+  lastFacingDirection: {x: 0, y: 0}
+  MaxHealth: 100
+  health: 0
   talkAction:
     m_Name: Talk
     m_Type: 1
@@ -116,6 +140,15 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Talk
       m_Flags: 0
+    m_Flags: 0
+  continueDialogue:
+    m_Name: Continue Dialogue
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a09fa683-a0f9-4e60-9324-1c91cf469b65
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
     m_Flags: 0
 --- !u!50 &9125860048863903993
 Rigidbody2D:
