@@ -22,25 +22,26 @@ public class player : MonoBehaviour
 
     Rigidbody2D rigidbody2d;
 
-    
+    public Animator animator;
 
+    public Inventory inventory;
 
-    //private Animator animator;
-
-    public LayerMask s;
-
-    //public LayerMask Interactable;
-
-    //private void Awake()
-    // {
-    //      animator = GetComponent<Animator>();
-    // }
+    private Vector2 lastFacingDirection;
 
     public static player instance;
 
+    public int MaxHealth = 100;
+
+    public int health;
+
+    public LayerMask s;
+
+
     private void Awake()
     {
-        if(instance == null)
+        //inventory = new Inventory(10);
+        health = MaxHealth;
+        if (instance == null)
         {
             instance = this;
         }
@@ -51,21 +52,66 @@ public class player : MonoBehaviour
 
     }
 
-  //need to install package input system, window -> package manager
+    //need to install package input system, window -> package manager
+
+    
+    public void DropItem(Item item)
+    {
+        Vector2 spawnLocation = transform.position;
+
+        Vector2 spawnOffset = Random.insideUnitCircle + Vector2.one;
+
+        Item droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
+
+        droppedItem.rb2d.AddForce(spawnOffset * .2f, ForceMode2D.Impulse);
+
+    }
+
+    public void ShootBook()
+    {
+        int bookIndex = FindBookIndexInInventory();
+
+        if (bookIndex != -1)
+        {
+            Vector2 shootingDirection = move.normalized;
+
+            // If the player is not moving, use the last facing direction
+            if (shootingDirection == Vector2.zero)
+            {
+                shootingDirection = lastFacingDirection.normalized;
+            }
+
+            if (shootingDirection != Vector2.zero)
+            {
+                Vector2 spawnLocation = transform.position;
+                Vector2 spawnOffset = shootingDirection * 1.5f;
+
+                Item book_shot = GameManager.instance.itemManager.GetItemByType(CollectableType.BOOK);
+                Item shootBook = Instantiate(book_shot, spawnLocation + spawnOffset, Quaternion.identity);
+
+                //shootBook.GetComponent<Collider2D>().isTrigger = false;
+                shootBook.tag = "ShotBook";
+
+                shootBook.rb2d.AddForce(shootingDirection * 5, ForceMode2D.Impulse);
+
+                inventory.Remove(bookIndex);
+            }
+        }
+    }
+
+    public void DrinkCoffee()
+    {
+        int coffeeIndex = FindCoffeeIndexInInventory();
+
+        if (coffeeIndex != -1)
+        {
+            this.moveSpeed = this.moveSpeed * 1.25f;
+            inventory.Remove(coffeeIndex);
+        }
+    }
 
 
     private bool talking;
-
-
-    //private Animator animator;
-
-    //public LayerMask solidobjectslayer;
-    //public LayerMask Interactable;
-
-    //private void Awake()
-    // {
-    //      animator = GetComponent<Animator>();
-    // }
 
     //actions for talking to npcs etc
     public InputAction talkAction;
@@ -90,7 +136,16 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootBook();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DrinkCoffee();
+        }
+        
     }
 
     public void FixedUpdate()
@@ -104,52 +159,24 @@ public class player : MonoBehaviour
             rigidbody2d.MovePosition(position);
         }
     }
-    /*
-     * Grej för interaction med NPC
-    void interact()
+    
+    void AnimateMovement(Vector3 direction)
     {
-        var facingDir = new Vector3(animator.GetFloat("move_x"), animator.GetFloat("move_y"));
-        var interactpos = transform.position + facingDir;
-        var collider = Physics2D.OverlapCircle(interactpos, 0.2f, Interactable);
-        if (collider != null)
+        if (animator != null)
         {
-
-            collider.GetComponent<interface_>().Interact(); 
+            if (direction.magnitude > 0)
+            {
+                animator.SetBool("isMoving", true);
+                animator.SetFloat("horizontal", direction.x);
+                animator.SetFloat("vertical", direction.y);
+            }
+            else
+            {
+                animator.SetBool("isMoving", false);
+            }
         }
-
     }
-    */
-
-    /* IEnumerator Move(Vector3 targetPos)
-     {
-         is_moving = true;
-         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
-         {
-             //transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-             rigidbody2d.MovePosition(targetPos);
-             yield return null;
-
-
-
-         }
-         //transform.position = targetPos;
-         is_moving = false;
-
-     }*/
-    //obs
-
-
-
-    private bool isWalkable(Vector3 targetPos)
-    {
-        //if (Physics2D.OverlapCircle(targetPos, 0.2f, solidobjectslayer | Interactable) != null)
-        //{
-        //    return false;
-
-        //}
-        return true;
-
-    }
+    
 
     void TalkNPC(InputAction.CallbackContext context)
     {
@@ -174,111 +201,68 @@ public class player : MonoBehaviour
             }
         }
     }
+
+    
+    private int FindBookIndexInInventory()
+    {
+        for (int i = 0; i < inventory.slots.Count; i++)
+        {
+            if (inventory.slots[i].type == CollectableType.BOOK)
+            {
+                return i; // Return the index of the book in the inventory
+            }
+        }
+
+        // Book not found in the inventory
+        return -1;
+    }
+
+    private int FindCoffeeIndexInInventory()
+    {
+        for (int i = 0; i < inventory.slots.Count; i++)
+        {
+            if (inventory.slots[i].type == CollectableType.COFFEE)
+            {
+                return i; // Return the index of the book in the inventory
+            }
+        }
+
+        // Book not found in the inventory
+        return -1;
+    }
+    
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage(10); // Adjust the amount of damage as needed
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            TakeDamage(10);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        // Handle player death here, such as game over screen or respawn logic
+    }
+
 }
-    /*
-    void Start()
-    {
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        MoveAction.Enable();
-
-    }
-
-
-
-
-    private void FixedUpdate()
-    {
-
-        move = MoveAction.ReadValue<Vector2>();
-        Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
-        rigidbody2d.MovePosition(position);
-    }
-
-        // Update is called once per frame
-        /*
-        public void Update()
-        {
-            Debug.Log(is_moving);
-            if (!is_moving)
-            {
-                input.x = Input.GetAxisRaw("Horizontal");
-                input.y = Input.GetAxisRaw("Vertical");
-                //Debug.Log(input.x);
-
-                if (input != Vector2.zero)
-                {
-                    //animator.SetFloat("move_x", input.x);
-                    //animator.SetFloat("move_y", input.y);
-                    targetPos = transform.position;
-                    targetPos.x += input.x;
-                    targetPos.y += input.y;
-
-
-
-                    if (isWalkable(targetPos))
-                    {
-                        StartCoroutine(Move(targetPos));
-
-                    }
-
-                    //StartCoroutine(Move(targetPos));
-                }
-
-            }
-            //animator.SetBool("is_moving", is_moving);
-            //if (Input.GetKeyDown(KeyCode.Z)) { interact(); }
-        }*/
-        /*
-         * Grej för interaction med NPC
-        void interact()
-        {
-            var facingDir = new Vector3(animator.GetFloat("move_x"), animator.GetFloat("move_y"));
-            var interactpos = transform.position + facingDir;
-            var collider = Physics2D.OverlapCircle(interactpos, 0.2f, Interactable);
-            if (collider != null)
-            {
-
-                collider.GetComponent<interface_>().Interact(); 
-            }
-
-        }
-        */
-        /*
-        IEnumerator Move(Vector3 targetPos)
-        {
-            is_moving = true;
-            //while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon && is_moving == true)
-
-            int i = 1;
-            for(; i < 2;)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-
-                Debug.Log("Fast move");
-                yield return null;
-
-
-                i++;
-            }
-            transform.position = targetPos;
-            is_moving = false;
-
-        }
-     //obs*/
-
-
-        /*
-           private bool isWalkable(Vector3 targetPos)
-           {
-               if (Physics2D.OverlapCircle(targetPos, 0.2f, s) != null) //| Interactable) != null)
-               {
-                   Debug.Log("falskt");
-                   return false;
-
-               }
-               Debug.Log("sant");
-               return true;
-
-           }
-        */
+ 
     
