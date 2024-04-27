@@ -50,6 +50,7 @@ MonoBehaviour:
   player: {fileID: 1471174118696646844, guid: 322e5713bd217174cb17022248bf98c4, type: 3}
   speed: 1
   health: 1
+  enemyPrefab: {fileID: 4409290842571922649}
 --- !u!212 &3631755429811241243
 SpriteRenderer:
   m_ObjectHideFlags: 0

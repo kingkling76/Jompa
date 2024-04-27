@@ -48,6 +48,8 @@ public class player : MonoBehaviour
 
     private Animator animator;
 
+    public bool is_in_dungeon;
+
 
     private void Awake()
     {
@@ -174,6 +176,8 @@ public class player : MonoBehaviour
         MoveAction.Enable();
         continueDialogue.Enable();
         MoveAction.Enable();
+
+        is_in_dungeon = false;
 
         talkAction.performed += TalkNPC;
         rigidbody2d = GetComponent<Rigidbody2D>();

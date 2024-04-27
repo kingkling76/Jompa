@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public player player;
-    public float speed;
     public int health;
+    public float speed;
+    public GameObject enemyPrefab;
+    private player player;
+    private Vector2 spawn;
+
+    // Constructor for setting initial values
+    public Enemy(int health, float speed, Vector2 spawn)
+    {
+        this.health = health;
+        this.speed = speed;
+        this.spawn = spawn;
+    }
+
+    // Method for instantiating the enemy prefab
+    public void SpawnEnemy()
+    {
+        GameObject newEnemy = Instantiate(enemyPrefab, spawn, Quaternion.identity);
+        // You can further customize the instantiated enemy here, like setting its health, speed, etc.
+    }
+
 
 
     public void Update()
