@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; //need to install package input system, window -> package manager
 
+using ItemEnum;
 
 public class player : MonoBehaviour
 {
@@ -29,17 +30,21 @@ public class player : MonoBehaviour
 
     public LayerMask s;
 
-    public Animator animator;
-
     public Inventory inventory;
 
     public Vector2 lastFacingDirection;
+
+    private Vector2 lastNPCdir;
 
     public static player instance {get; private set;}
 
     public int MaxHealth = 100;
 
     public int health;
+
+    public int coins = 50;
+
+    private Animator animator;
 
 
     private void Awake()
@@ -56,6 +61,8 @@ public class player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        animator = GetComponent<Animator>();
     }
 
     public void DropItem(Item item)
@@ -188,12 +195,25 @@ public class player : MonoBehaviour
     public void FixedUpdate()
     {
         if (talking)
-            Debug.Log("HELLO");
+            animator.SetBool("IsWalking", false);
+
         else
         {
             move = MoveAction.ReadValue<Vector2>();
-            is_moving = true;
-            Vector2 position = (Vector2)transform.position + move * moveSpeed * Time.deltaTime;
+            if (move != Vector2.zero)
+            {
+                animator.SetFloat("X", move.x);
+                animator.SetFloat("Y", move.y);
+
+                animator.SetBool("IsWalking", true);
+            }
+            else
+            {
+                animator.SetBool("IsWalking", false);
+            }
+            if (move != Vector2.zero)
+                lastNPCdir = move;
+            Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
             rigidbody2d.MovePosition(position);
             is_moving = false;
         }
@@ -204,9 +224,6 @@ public class player : MonoBehaviour
             move.x = Input.GetAxisRaw("Horizontal");
             move.y = Input.GetAxisRaw("Vertical");
             //Debug.Log(input.x);
-
-            Vector3 direction = new Vector3(move.x, move.y);
-            AnimateMovement(direction);
 
             if (move != Vector2.zero)
             {
@@ -255,13 +272,17 @@ public class player : MonoBehaviour
     void TalkNPC(InputAction.CallbackContext context)
     {
         //use raycasting to see if we're close enough to the NPC
-        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("s"));
+        RaycastHit2D hit;
+        if (move == Vector2.zero)
+            hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lastNPCdir, 1.5f, LayerMask.GetMask("NPC"));
+        else
+            hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, move, 1.5f, LayerMask.GetMask("NPC"));
         //if hit (close enough)
         if (hit.collider != null)
         {
             Debug.Log("TRÄFF");
             Debug.Log("Hit: " + hit.collider.name);
-            if (hit.collider.name == "NPC")
+            if (hit.collider.CompareTag("NPC"))
             {
                 talking = true;
                 NPC npc = hit.collider.GetComponent<NPC>();
@@ -273,7 +294,7 @@ public class player : MonoBehaviour
                 Debug.Log("HEJEHEJHEJHEJHEJHEJ");
                 talking = true;
                 Shopkeeper sk = hit.collider.GetComponent<Shopkeeper>();
-                sk.Talk();
+                sk.ShopUI();
             }
         }
     }

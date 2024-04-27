@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using ItemEnum;
+
 public class Item : MonoBehaviour
 {
     public CollectableType type;
@@ -26,7 +28,11 @@ public class Item : MonoBehaviour
     }
 }
 
-public enum CollectableType
+
+namespace ItemEnum
 {
-    NONE, COFFEE, BOOK, PENN
+    public enum CollectableType
+    {
+        NONE, COFFEE, BOOK, PENN
+    }
 }

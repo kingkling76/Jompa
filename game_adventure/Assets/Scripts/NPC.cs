@@ -9,7 +9,7 @@ public class NPC : MonoBehaviour
 {
     public Vector2 movement;
     public float time;
-    public bool moved; 
+    public bool moved;
     Rigidbody2D rigidbody2d;
     Vector2 move;
 
@@ -21,6 +21,13 @@ public class NPC : MonoBehaviour
 
     //InputActions for button presses
     public InputAction continueTalking;
+
+    //for different behavior
+    [SerializeField]
+    NPCType type = NPCType.MOVING;
+
+    //animator
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +50,9 @@ public class NPC : MonoBehaviour
 
         //bind input actions to functions
         continueTalking.performed += StopTalking;
+
+        //Animator
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -53,12 +63,17 @@ public class NPC : MonoBehaviour
     //don't want jittering, FixedUpdate has same freq as the physics system
     void FixedUpdate()
     {
-        //dialoguePanel.activeInHierarchy || dialoguePanel == null
-        if (1==0)
+        if (dialoguePanel.activeInHierarchy)
             ;
         else
-            Wander();
+        {
+            if (type == NPCType.MOVING)
+            {
+                Wander();
+            }
 
+
+        }
     }
 
     void Wander()
@@ -68,7 +83,7 @@ public class NPC : MonoBehaviour
         rigidbody2d.MovePosition(position);
         time -= Time.deltaTime;
 
-        if(time <= 0) //The NPC should make a new decision
+        if (time <= 0) //The NPC should make a new decision
         {
             if (moved) //if the npc moved previously make him stationary for the next few units of time
             {
@@ -76,6 +91,9 @@ public class NPC : MonoBehaviour
                 time = Random.Range(1, 3);
                 movement.x = 0;
                 movement.y = 0;
+
+                //set animation to false
+                animator.SetBool("IsWalking", false);
             }
             else
             {
@@ -85,7 +103,14 @@ public class NPC : MonoBehaviour
                 movement.y = Random.Range(-1, 2);
 
                 if (movement.x != 0 || movement.y != 0)
+                {
                     moved = true;
+                    animator.SetFloat("X", movement.x);
+                    animator.SetFloat("Y", movement.y);
+                    animator.SetBool("IsWalking", true);
+                }
+                else
+                    animator.SetBool("IsWalking", false);
             }
 
         }
@@ -93,6 +118,9 @@ public class NPC : MonoBehaviour
 
     public void Talk()
     {
+        Debug.Log("NPC TALK HAS BEEN CALLED\n");
+        if (dialoguePanel.activeInHierarchy)
+            return;
         dialoguePanel.SetActive(true);
         index = Random.Range(0, 10);
         StartCoroutine(Typing());
@@ -107,7 +135,7 @@ public class NPC : MonoBehaviour
 
     IEnumerator Typing()
     {
-        foreach(char letter in dialogue[index].ToCharArray())
+        foreach (char letter in dialogue[index].ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.06f);
@@ -117,7 +145,7 @@ public class NPC : MonoBehaviour
     void StopTalking(InputAction.CallbackContext context)
     {
         //if the panel is open, close it and clear text 
-        if (dialoguePanel.activeInHierarchy) 
+        if (dialoguePanel.activeInHierarchy)
         {
             player.instance.talking = false;
             ClearText();
@@ -126,6 +154,11 @@ public class NPC : MonoBehaviour
         else
             return;
     }
+}
+
+public enum NPCType
+{
+    MOVING, STATIC
 }
 
 /*TODO

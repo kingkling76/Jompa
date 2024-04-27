@@ -9,6 +9,8 @@ TagManager:
   - ShotBook
   - Enemy
   - Penn
+  - NPC
+  - Event
   layers:
   - Default
   - TransparentFX
