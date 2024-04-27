@@ -56,8 +56,10 @@ public class ShopManagerScript : MonoBehaviour
 
     public void ToggleShop()
     {
+        Debug.Log("TOGGLESHOP");
         if (!shop.activeInHierarchy)
         {
+            Debug.Log("HEJHEJHEJN");
             shop.SetActive(true);
             CoinsTxt.gameObject.SetActive(true);
         }

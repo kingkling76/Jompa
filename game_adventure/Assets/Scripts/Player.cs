@@ -218,7 +218,7 @@ public class player : MonoBehaviour
             }
             if (move != Vector2.zero)
                 lastNPCdir = move;
-            Vector2 position = (Vector2)transform.position + move * 3.0f * Time.deltaTime;
+            Vector2 position = (Vector2)transform.position + move * moveSpeed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
         }
         if (Input.GetKeyDown(KeyCode.M))
