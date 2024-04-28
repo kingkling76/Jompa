@@ -47,9 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e380c218329fd374a8a3a6b9681b49a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1471174118696646844, guid: 322e5713bd217174cb17022248bf98c4, type: 3}
-  speed: 1
   health: 1
+  speed: 1
   enemyPrefab: {fileID: 4409290842571922649}
 --- !u!212 &3631755429811241243
 SpriteRenderer:
@@ -115,7 +114,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

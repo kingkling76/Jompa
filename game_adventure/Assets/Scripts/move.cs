@@ -5,12 +5,13 @@ using UnityEngine;
 public class move : MonoBehaviour
 {
     public player player;
+    public EnemySpawner spawner;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("jalla");
 
-        
+        spawner.OutOfSpawner = true;
        
         player.instance.transform.position = new Vector3(-44.5f, -4.5f, 0f);
 

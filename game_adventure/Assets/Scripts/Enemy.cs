@@ -21,7 +21,9 @@ public class Enemy : MonoBehaviour
     // Method for instantiating the enemy prefab
     public void SpawnEnemy()
     {
-        GameObject newEnemy = Instantiate(enemyPrefab, spawn, Quaternion.identity);
+        GameObject enemyPrefab = Resources.Load<GameObject>("Enemy"); // Assuming you have an enemy prefab named "EnemyPrefab"
+        Instantiate(enemyPrefab, spawn, Quaternion.identity);
+
         // You can further customize the instantiated enemy here, like setting its health, speed, etc.
     }
 
