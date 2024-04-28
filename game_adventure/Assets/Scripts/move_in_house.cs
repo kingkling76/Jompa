@@ -9,14 +9,16 @@ public class move_in_house : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("jalla");
+        if (other.tag == "Player")
+        {
 
 
 
-        player.instance.transform.position = new Vector3(-103f, 15.4f, 0f);
+            player.instance.transform.position = new Vector3(-103f, 15.4f, 0f);
 
-        player.instance.is_moving = false;
-        player.instance.targetPos = player.instance.transform.position;
-
+            player.instance.is_moving = false;
+            player.instance.targetPos = player.instance.transform.position;
+        }
 
     }
 }

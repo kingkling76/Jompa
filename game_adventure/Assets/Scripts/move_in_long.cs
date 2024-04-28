@@ -10,24 +10,26 @@ public class move_in_long : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("jalla");
+        if (other.tag == "Player")
+        {
+            Debug.Log("jalla");
 
 
-        spawner.Kling = true;
+            spawner.Kling = true;
 
-        player.instance.transform.position = new Vector3(354.9f, -66.4f, 0f);
-        Debug.Log("0");
-        player.instance.is_in_dungeon = true;
-        Debug.Log("1");
+            player.instance.transform.position = new Vector3(354.9f, -66.4f, 0f);
+            Debug.Log("0");
+            player.instance.is_in_dungeon = true;
+            Debug.Log("1");
 
-        player.instance.is_moving = false;
+            player.instance.is_moving = false;
 
-        Debug.Log("2");
-        audioManager.change_music();
-        Debug.Log("3");
-        player.instance.targetPos = player.instance.transform.position;
-        Debug.Log("4");
+            Debug.Log("2");
+            audioManager.change_music();
+            Debug.Log("3");
+            player.instance.targetPos = player.instance.transform.position;
+            Debug.Log("4");
 
-
+        }
     }
 }
