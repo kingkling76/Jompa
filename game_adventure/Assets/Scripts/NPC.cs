@@ -26,7 +26,7 @@ public class NPC : MonoBehaviour
 
     //for different behavior
     [SerializeField]
-    NPCType type = NPCType.MOVING;
+    NPCType type;
 
     //animator
     private Animator animator;
@@ -140,26 +140,32 @@ public class NPC : MonoBehaviour
     public void Talk()
     {
         Debug.Log("NPC TALK HAS BEEN CALLED\n");
+        Debug.Log(index_dialog);
         if (dialoguePanel.activeInHierarchy)
             return;
         dialoguePanel.SetActive(true);
         StartCoroutine(Typing());
+        index_dialog = index_dialog + 1;
     }
 
     public void ClearText()
     {
         dialogueText.text = "";
-        dialoguePanel.SetActive(false);
     }
 
     IEnumerator Typing()
     {
-        foreach (char letter in dialogue[index_dialog].ToCharArray())
+        if (index_dialog == dialogue.Length) index_dialog = 0;
+        else
         {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(0.06f);
+            foreach (char letter in dialogue[index_dialog].ToCharArray())
+            {
+                dialogueText.text += letter;
+                yield return new WaitForSeconds(0.06f);
 
+            }
         }
+
     }
 
     void StopTalking(InputAction.CallbackContext context)
@@ -171,19 +177,21 @@ public class NPC : MonoBehaviour
             {
                 ClearText();
                 Typing();
-                index_dialog++;
+                //index_dialog++;
                 Debug.Log(index_dialog);
             }
             else
             {
                 Debug.Log("jshs");
-                index_dialog = 0;
                 player.instance.talking = false;
                 ClearText();
+                dialoguePanel.SetActive(false);
             }
         }
         else
+        {
             return;
+        }
     }
 }
 
