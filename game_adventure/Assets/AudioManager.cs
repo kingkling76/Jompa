@@ -3,7 +3,28 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("-----source------")]
+
+    public player player;
+    public static AudioManager instance_a; //{ get; private set; }
+    private void Awake()
+    {
+
+
+        //Singelton pattern
+        if (instance_a == null)
+        {
+            instance_a = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+
+
+     [Header("-----source------")]
     [SerializeField] AudioSource music;
 
     //[SerializeField] AudioSource sfx;
@@ -20,9 +41,25 @@ public class AudioManager : MonoBehaviour
         music.clip = main_music;
         music.Play();
     }
-    public void Update()
+
+    public void change_music()
     {
-        
+        if(player.instance.is_in_dungeon==true)
+        {
+            music.Stop();
+            music.clip = dungeon;
+            music.Play();
+
+        }
+        if (player.instance.is_in_dungeon == false)
+        {
+            music.Stop();
+            music.clip = main_music;
+            music.Play();
+
+        }
+
     }
+    
 
 }
