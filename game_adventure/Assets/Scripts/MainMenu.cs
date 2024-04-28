@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject menu;
     public GameObject control;
     public GameObject about;
+    public GameObject inventorypanel;
 
 
     public void playGame()
@@ -15,6 +16,7 @@ public class MainMenu : MonoBehaviour
         menu.SetActive(false);
         about.SetActive(false);
         control.SetActive(false);
+        inventorypanel.SetActive(true);
 
     }
     public void quitGame()

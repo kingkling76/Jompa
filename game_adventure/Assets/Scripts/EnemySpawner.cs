@@ -8,7 +8,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefab;
     [SerializeField] private bool canSpawn = true;
     public bool CastleSpawner;
+    public bool ChurchPpawner;
+
     public bool OutOfSpawner;
+    public bool Kling;
+
     public int numEnemies;
 
     private Coroutine spawnerCoroutine;
@@ -23,7 +27,15 @@ public class EnemySpawner : MonoBehaviour
         {
             Spawner(numEnemies);
         }
+        if(ChurchPpawner && canSpawn)
+        {
 
+            Spawner(numEnemies);
+        }
+        if(Kling)
+        {
+            Spawner(numEnemies);
+        }
 
     }
 
@@ -34,11 +46,14 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab[0], transform.position, Quaternion.identity);
+            Debug.Log("spawn");
         }
 
         // Stop spawning after spawning 10 enemies
         canSpawn = false;
         CastleSpawner = false;
+        ChurchPpawner = false;
+        Kling = false;
         OutOfSpawner = false;
     }
 }

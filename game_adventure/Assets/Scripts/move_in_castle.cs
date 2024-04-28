@@ -18,9 +18,10 @@ public class move_in_castle : MonoBehaviour
         spawner.CastleSpawner = true;
 
 
-        /*
+       
         player.instance.is_moving = false;
         player.instance.targetPos = player.instance.transform.position;
+        /*
         Vector2 blabla = new Vector2(6.68f, 140.9f);
         Enemy p = new Enemy(1, 10, blabla);
         p.SpawnEnemy();
