@@ -16,8 +16,10 @@ public class NPC : MonoBehaviour
     //for the text box
     public GameObject dialoguePanel;
     public Text dialogueText;
+    [SerializeField]
     public string[] dialogue;
-    int index;
+
+    int index_dialog = 0;
 
     //InputActions for button presses
     public InputAction continueTalking;
@@ -41,10 +43,6 @@ public class NPC : MonoBehaviour
         //get the rigidbody component
         rigidbody2d = GetComponent<Rigidbody2D>();
 
-        //index and options for the dialogue
-        dialogue = new string[] { "Hej", "Barev", "Ni Hao", "Yassoo", "Namaste", "Salam", "Hola", "Merhaba", "Privet", "Zdravo" };
-        index = 0;
-
         //enable input actions
         continueTalking.Enable();
 
@@ -58,6 +56,8 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
     }
 
     //don't want jittering, FixedUpdate has same freq as the physics system
@@ -71,6 +71,27 @@ public class NPC : MonoBehaviour
             {
                 Wander();
             }
+            else if(type == NPCType.QUEST1 && index_dialog < dialogue.Length)
+            {
+
+
+                rigidbody2d.transform.position = Vector2.MoveTowards(transform.position, player.instance.transform.position - new Vector3(0,1,0), 2 * Time.deltaTime);
+                animator.SetBool("IsWalking", true);
+
+                if((rigidbody2d.transform.position - player.instance.transform.position).magnitude < 1.2)
+                {
+                    animator.SetBool("IsWalking", false);
+
+                    Talk();
+
+                }
+            }
+            else if (type == NPCType.QUEST1 && index_dialog == dialogue.Length)
+            {
+                type = NPCType.MOVING;
+                player.instance.MoveAction.Enable();
+            }
+
 
 
         }
@@ -122,23 +143,22 @@ public class NPC : MonoBehaviour
         if (dialoguePanel.activeInHierarchy)
             return;
         dialoguePanel.SetActive(true);
-        index = Random.Range(0, 10);
         StartCoroutine(Typing());
     }
 
     public void ClearText()
     {
         dialogueText.text = "";
-        index = 0;
         dialoguePanel.SetActive(false);
     }
 
     IEnumerator Typing()
     {
-        foreach (char letter in dialogue[index].ToCharArray())
+        foreach (char letter in dialogue[index_dialog].ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.06f);
+
         }
     }
 
@@ -147,9 +167,20 @@ public class NPC : MonoBehaviour
         //if the panel is open, close it and clear text 
         if (dialoguePanel.activeInHierarchy)
         {
-            player.instance.talking = false;
-            ClearText();
-            index = 0;
+            if(index_dialog < dialogue.Length)
+            {
+                ClearText();
+                Typing();
+                index_dialog++;
+                Debug.Log(index_dialog);
+            }
+            else
+            {
+                Debug.Log("jshs");
+                index_dialog = 0;
+                player.instance.talking = false;
+                ClearText();
+            }
         }
         else
             return;
@@ -158,7 +189,7 @@ public class NPC : MonoBehaviour
 
 public enum NPCType
 {
-    MOVING, STATIC
+    MOVING, STATIC, QUEST1
 }
 
 /*TODO

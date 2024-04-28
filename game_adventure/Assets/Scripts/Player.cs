@@ -46,7 +46,7 @@ public class player : MonoBehaviour
 
     public int coins = 50;
 
-    private Animator animator;
+    public Animator animator;
 
     public bool is_in_dungeon;
 

@@ -11,6 +11,7 @@ TagManager:
   - Penn
   - NPC
   - Event
+  - Quest1NPC
   layers:
   - Default
   - TransparentFX

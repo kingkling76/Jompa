@@ -6,6 +6,7 @@ public class move : MonoBehaviour
 {
     public player player;
     public EnemySpawner spawner;
+    public StoryManager storyManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,6 +18,8 @@ public class move : MonoBehaviour
 
         player.instance.is_moving = false;
         player.instance.targetPos = player.instance.transform.position;
+
+        StoryManager.instance.Quest1();
 
 
     }
