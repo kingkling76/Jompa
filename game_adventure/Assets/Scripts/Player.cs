@@ -50,6 +50,8 @@ public class player : MonoBehaviour
 
     public bool is_in_dungeon;
 
+    public bool is_in_boss;
+
 
     private void Awake()
     {
@@ -178,6 +180,7 @@ public class player : MonoBehaviour
         MoveAction.Enable();
 
         is_in_dungeon = false;
+        is_in_boss = false;
 
         talkAction.performed += TalkNPC;
         rigidbody2d = GetComponent<Rigidbody2D>();

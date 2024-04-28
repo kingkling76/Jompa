@@ -35,6 +35,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip dungeon;
 
+    public AudioClip boss;
+
 
     private void Start()
     {
@@ -58,7 +60,13 @@ public class AudioManager : MonoBehaviour
             music.Play();
 
         }
+        if (player.instance.is_in_boss == true)
+        {
 
+            music.Stop();
+            music.clip = boss;
+            music.Play();
+        }
     }
     
 
