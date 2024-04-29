@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     public bool OutOfSpawner;
     public bool Kling;
-    public static int BossSpawn =0;
+    public bool BossSpawn;
 
     public int numEnemies;
 
@@ -20,49 +20,121 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (CastleSpawner && canSpawn)
+        if (CastleSpawner)
         {
-            Spawner(numEnemies, 0);
+            CastleSpawner_func(numEnemies, 0);
         }
-        if (OutOfSpawner && canSpawn)
+        if (OutOfSpawner)
         {
-            Spawner(numEnemies, 0);
+            OutOfSpawner_func(numEnemies, 0);
         }
-        if(ChurchPpawner && canSpawn)
+        if (ChurchPpawner)
         {
 
-            Spawner(numEnemies, 0);
+            ChurchSpawner_func(numEnemies, 0);
         }
-        if(Kling)
+        if (Kling)
         {
-            Spawner(numEnemies, 0);
+            KlingSpawner_func(numEnemies, 0);
         }
-        if (BossSpawn == 1)
+        if (BossSpawn == true)
         {
-            Spawner(numEnemies,1);
+            BossSpawner_func(numEnemies, 1);
         }
 
     }
 
+    /*
     private void Spawner(int num, int index)
     {
 
         int enemiesToSpawn = num; // Number of enemies to spawn
-        if(enemiesToSpawn == 0) enemiesToSpawn=1;
-        Debug.Log("Enemies to spawn");
-        Debug.Log(enemiesToSpawn);
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
         for (int i = 0; i < enemiesToSpawn; i++)
         {
+            Debug.Log(enemyPrefab[index]);
             Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
-            Debug.Log("sadana");
         }
+
+
 
         // Stop spawning after spawning 10 enemies
         canSpawn = false;
-        CastleSpawner = false;
-        ChurchPpawner = false;
-        Kling = false;
-        OutOfSpawner = false;
-        BossSpawn++;
     }
+    */
+    public void CastleSpawner_func(int num, int index)
+    {
+
+        int enemiesToSpawn = num; // Number of enemies to spawn
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Debug.Log(enemyPrefab[index]);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
+        }
+        CastleSpawner = false;
+
+    }
+
+    public void ChurchSpawner_func(int num, int index)
+    {
+
+        int enemiesToSpawn = num; // Number of enemies to spawn
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Debug.Log(enemyPrefab[index]);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
+        }
+        ChurchPpawner = false;
+
+    }
+
+    public void KlingSpawner_func(int num, int index)
+    {
+
+        int enemiesToSpawn = num; // Number of enemies to spawn
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Debug.Log(enemyPrefab[index]);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
+        }
+        Kling = false;
+
+    }
+
+    public void OutOfSpawner_func(int num, int index)
+    {
+
+        int enemiesToSpawn = num; // Number of enemies to spawn
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Debug.Log(enemyPrefab[index]);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
+        }
+        OutOfSpawner = false;
+    }
+
+
+    public void BossSpawner_func(int num, int index)
+    {
+
+        /*int enemiesToSpawn = num; // Number of enemies to spawn
+        if (enemiesToSpawn == 0) enemiesToSpawn = 1;
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+
+            Debug.Log(enemyPrefab[index]);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
+        }
+        BossSpawn++;
+        */
+        Instantiate(enemyPrefab[1], transform.position, Quaternion.identity);
+        //BossSpawn;
+        BossSpawn = false;
+
+    }
+
 }

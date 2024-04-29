@@ -15,7 +15,7 @@ public class move_in_long : MonoBehaviour
             Debug.Log("jalla");
 
 
-            spawner.Kling = true;
+            spawner.KlingSpawner_func(15,0);
 
             player.instance.transform.position = new Vector3(354.9f, -66.4f, 0f);
             Debug.Log("0");

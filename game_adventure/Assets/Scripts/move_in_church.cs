@@ -16,7 +16,7 @@ public class move_in_church : MonoBehaviour
 
             player.instance.GodhetsP++;
 
-            spawner.ChurchPpawner = true;
+            spawner.ChurchSpawner_func(10, 0);
 
             player.instance.transform.position = new Vector3(-68f, 71.8f, 0f);
 

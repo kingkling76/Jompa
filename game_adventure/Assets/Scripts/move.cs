@@ -13,7 +13,7 @@ public class move : MonoBehaviour
         {
             Debug.Log("jalla");
 
-            spawner.OutOfSpawner = true;
+            spawner.OutOfSpawner_func(5,0);
 
             player.instance.transform.position = new Vector3(-44.5f, -4.5f, 0f);
 

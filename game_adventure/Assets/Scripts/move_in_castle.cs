@@ -17,7 +17,8 @@ public class move_in_castle : MonoBehaviour
 
             player.instance.transform.position = new Vector3(11.33f, 138.25f, 0f);
 
-            spawner.CastleSpawner = true;
+            //spawner.CastleSpawner = true;
+            spawner.CastleSpawner_func(15,0);
 
 
 
