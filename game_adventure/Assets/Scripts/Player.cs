@@ -385,6 +385,7 @@ public class player : MonoBehaviour
     private void TakeDamage(int damage)
     {
         health -= damage;
+        audioManager.do_clip_death();
         if (health <= 0)
         {
             Die();

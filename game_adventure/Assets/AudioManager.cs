@@ -47,6 +47,10 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip door;
 
+    public AudioClip death;
+
+    public AudioClip enemy;
+
 
     private void Start()
     {
@@ -103,5 +107,16 @@ public class AudioManager : MonoBehaviour
 
 
     }
+    public void do_clip_death()
+    {
+        sfx.PlayOneShot(death);
 
+
+    }
+    public void do_clip_hurt()
+    {
+        sfx.PlayOneShot(enemy);
+
+
+    }
 }

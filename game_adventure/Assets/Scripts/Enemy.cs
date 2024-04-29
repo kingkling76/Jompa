@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public GameObject enemyPrefab;
     private player player;
     private Vector2 spawn;
-
+    public AudioManager audioManager;
     // Constructor for setting initial values
     public Enemy(int health, float speed, Vector2 spawn)
     {
@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("ShotBook"))
         {
+            audioManager.do_clip_hurt();
             // If the collided object is a book, destroy the enemy
             health = health - 1;
             Destroy(other.gameObject);
@@ -50,6 +51,7 @@ public class Enemy : MonoBehaviour
         }
         if (other.CompareTag("Penn"))
         {
+            audioManager.do_clip_hurt();
             health = health - 1;
             if (health <= 0)
             {
