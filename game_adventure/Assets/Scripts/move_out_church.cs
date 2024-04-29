@@ -5,12 +5,14 @@ using UnityEngine;
 public class move_out_church : MonoBehaviour
 {
     public player player;
+    public AudioManager audioManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
             Debug.Log("jalla");
+            audioManager.do_clip_door();
 
 
 

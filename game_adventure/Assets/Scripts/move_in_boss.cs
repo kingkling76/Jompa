@@ -13,6 +13,7 @@ public class move_in_boss : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            audioManager.do_clip_door();
             Debug.Log("jalla");
 
             Destroy(follower);

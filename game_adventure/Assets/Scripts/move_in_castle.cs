@@ -6,6 +6,7 @@ public class move_in_castle : MonoBehaviour
 {
     public player player;
     public EnemySpawner spawner;
+    public AudioManager audioManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,6 +15,7 @@ public class move_in_castle : MonoBehaviour
             Debug.Log("jalla");
 
 
+            audioManager.do_clip_door();
 
             player.instance.transform.position = new Vector3(11.33f, 138.25f, 0f);
 

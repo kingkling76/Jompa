@@ -13,6 +13,8 @@ public class move_out_long : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("jalla");
+            audioManager.do_clip_door();
+
 
 
 

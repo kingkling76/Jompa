@@ -6,11 +6,13 @@ public class move : MonoBehaviour
 {
     public player player;
     public EnemySpawner spawner;
+    public AudioManager audioManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            audioManager.do_clip_door();
             Debug.Log("jalla");
 
             spawner.OutOfSpawner_func(5,0);

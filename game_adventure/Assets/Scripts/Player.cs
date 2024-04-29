@@ -60,6 +60,8 @@ public class player : MonoBehaviour
 
     public bool HasHelpedLinus = false;
 
+    public AudioManager audioManager;
+
 
     private void Awake()
     {
@@ -99,6 +101,7 @@ public class player : MonoBehaviour
 
         if (bookIndex != -1)
         {
+            audioManager.do_clip_book(); 
             Vector2 shootingDirection = move.normalized;
 
             // If the player is not moving, use the last facing direction
@@ -164,6 +167,8 @@ public class player : MonoBehaviour
 
         if(coffeeIndex != -1)
         {
+            audioManager.do_clip_coffee();
+
             this.moveSpeed = this.moveSpeed * 1.25f;
             inventory.Remove(coffeeIndex);
         }
@@ -201,6 +206,7 @@ public class player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             ShootBook();
+            
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -209,6 +215,7 @@ public class player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             PennAttack();
+            audioManager.do_clip_penn();
         }
 
     }

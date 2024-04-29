@@ -13,6 +13,8 @@ public class move_in_long : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("jalla");
+            audioManager.do_clip_door();
+
 
 
             spawner.KlingSpawner_func(15,0);

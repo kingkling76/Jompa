@@ -8,10 +8,14 @@ public class move_in_church : MonoBehaviour
 
     public EnemySpawner spawner;
 
+    public AudioManager audioManager;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            audioManager.do_clip_door();
+
             Debug.Log("jalla");
 
             player.instance.GodhetsP++;

@@ -5,11 +5,15 @@ using UnityEngine;
 public class move_out_pressis : MonoBehaviour
 {
     public player player;
+    public AudioManager audioManager;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            audioManager.do_clip_door();
+
             Debug.Log("jalla");
 
 

@@ -26,6 +26,8 @@ public class AudioManager : MonoBehaviour
 
      [Header("-----source------")]
     [SerializeField] AudioSource music;
+    [SerializeField] AudioSource sfx;
+
 
     //[SerializeField] AudioSource sfx;
 
@@ -37,11 +39,20 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip boss;
 
+    public AudioClip penn;
+
+    public AudioClip book;
+
+    public AudioClip kaffe;
+
+    public AudioClip door;
+
 
     private void Start()
     {
         music.clip = main_music;
         music.Play();
+        sfx.volume = Mathf.Clamp01(0.1f);
     }
 
     public void change_music()
@@ -68,6 +79,29 @@ public class AudioManager : MonoBehaviour
             music.Play();
         }
     }
-    
+    public void do_clip_penn()
+    {
+        sfx.PlayOneShot(penn);
+
+
+    }
+    public void do_clip_book()
+    {
+        sfx.PlayOneShot(book);
+
+
+    }
+    public void do_clip_coffee()
+    {
+        sfx.PlayOneShot(kaffe);
+
+
+    }
+    public void do_clip_door()
+    {
+        sfx.PlayOneShot(door);
+
+
+    }
 
 }
