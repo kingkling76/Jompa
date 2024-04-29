@@ -21,6 +21,7 @@ TagManager:
   - prost
   - Kung
   - assistent
+  - Boss
   layers:
   - Default
   - TransparentFX

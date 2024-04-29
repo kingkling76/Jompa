@@ -70,7 +70,7 @@ public class NPC : MonoBehaviour
         dialogue_4 = new string[] { "Vilsen student: Har du varit på Pressis?", "Vilsen student: Gå bara uppåt" };
         dialogue_5 = new string[] { "Väpnaren Jöns: Dom behöver dig på Örebro Slott!", "Skuggan: Alla dessa distraktioner, gå bara tillbaka!", "Väpnare Jöns: Gå bara åt höger så kommer du dit" };
         dialogue_6 = new string[] { "Klas: Skumma grejjer pågår i T-husets källare", "Klas: Du råkar inte veta något om det?", "Skuggan: Riktig BS" };
-        dialogue_7 = new string[] { "Linus: SLÄPP IN MIG!!!!", "Linus: Jag missar min tenta, HJÄLP MIG!", "Linus: Kan du ta sönder dörren?", "Skuggan: Det är nog bäst att du hjälper honom" };
+        dialogue_7 = new string[] { "Linus: SLÄPP IN MIG!!!!", "Linus: Jag missar min tenta, HJÄLP MIG!", "Linus: Kan du ta sönder dörren?", "Skuggan: Det är nog bäst att du hjälper honom", "Linus: Tack!" };
         dialogue_8 = new string[] { "Dag: Jag har glömt koden till teknikmuseet", "Dag: Jag verkar vara ett instabilt system", "Dag: Någon student borde kanske komma ihåg koden" };
         dialogue_9 = new string[] { "Pär präst: Du städar upp din egna röra men tack", "Skuggan: Struntprat" };
         dialogue_10 = new string[] { "Kungen: Det är du ditt kräk! Försvinn!!", "Skuggan: Han vet inte vad han pratar om" };
@@ -197,9 +197,16 @@ public class NPC : MonoBehaviour
         }
         if (tag == "Linus")
         {
-            index = LinusNPC_index;
-            LinusNPC_index++;
-            if(index == 3) LinusNPC_index = 0;
+            if (player.instance.HasHelpedLinus)
+            {
+                index = 4;
+            }
+            else
+            {
+                index = LinusNPC_index;
+                LinusNPC_index++;
+                if (index == 3) LinusNPC_index = 0;
+            }
 
         }
         if (tag == "Dag")

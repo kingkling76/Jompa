@@ -12,7 +12,7 @@ public class move_out_castle : MonoBehaviour
         {
             Debug.Log("jalla");
 
-
+            player.instance.GodhetsP++;
 
             player.instance.transform.position = new Vector3(61.04f, 73.54f, 0f);
 

@@ -52,6 +52,10 @@ public class player : MonoBehaviour
 
     public bool is_in_boss;
 
+    public int GodhetsP = 0;
+
+    public bool HasHelpedLinus = false;
+
 
     private void Awake()
     {
@@ -202,6 +206,12 @@ public class player : MonoBehaviour
         {
             PennAttack();
         }
+
+    }
+
+    public void Win()
+    {
+        Debug.Log("Wiin");
     }
 
     public void FixedUpdate()
@@ -345,7 +355,7 @@ public class player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             TakeDamage(10); // Adjust the amount of damage as needed
         }
@@ -353,7 +363,7 @@ public class player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Enemy") || collision.collider.CompareTag("Boss"))
         {
             TakeDamage(10);
         }

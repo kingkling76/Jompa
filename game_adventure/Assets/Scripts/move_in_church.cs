@@ -14,6 +14,8 @@ public class move_in_church : MonoBehaviour
         {
             Debug.Log("jalla");
 
+            player.instance.GodhetsP++;
+
             spawner.ChurchPpawner = true;
 
             player.instance.transform.position = new Vector3(-68f, 71.8f, 0f);

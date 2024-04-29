@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             if (health <= 0) 
             {
+                if (this.CompareTag("Boss")) player.instance.Win();
                 Destroy(this.gameObject);
             }
 
@@ -52,6 +53,7 @@ public class Enemy : MonoBehaviour
             health = health - 1;
             if (health <= 0)
             {
+                if (this.CompareTag("Boss")) player.instance.Win();
                 Destroy(this.gameObject);
             }
         }
