@@ -12,8 +12,11 @@ public class BossInit : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if(EnemySpawner.BossSpawn < 1)
+            if (EnemySpawner.BossSpawn < 1)
+            {
+                Debug.Log("torde");
                 EnemySpawner.BossSpawn++;
+            }
         }
         Boss.health = 50 - 10 *player.instance.GodhetsP;
     }

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject info;
     public GameObject menu;
     public GameObject control;
     public GameObject about;
     public GameObject inventorypanel;
+
+    public GameObject end;
 
 
     public void playGame()
@@ -44,6 +47,7 @@ public class MainMenu : MonoBehaviour
 
     public void back()
     {
+        info.SetActive(false);
         control.SetActive(false);
         about.SetActive(false);
         menu.SetActive(true);
@@ -63,5 +67,10 @@ public class MainMenu : MonoBehaviour
         control.SetActive(false);
         menu.SetActive(true);
 
+    }
+
+    public void end_meny()
+    {
+        System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
     }
 }

@@ -18,6 +18,10 @@ public class player : MonoBehaviour
     public float targetTime;
 
     public InputAction MoveAction;
+
+    public GameObject end;
+
+    public GameObject defeat;
    
 
     Rigidbody2D rigidbody2d;
@@ -212,6 +216,8 @@ public class player : MonoBehaviour
     public void Win()
     {
         Debug.Log("Wiin");
+        end.SetActive(true);
+
     }
 
     public void FixedUpdate()
@@ -379,7 +385,7 @@ public class player : MonoBehaviour
     }
     private void Die()
     {
-        // Handle player death here, such as game over screen or respawn logic
+        defeat.SetActive(true);
     }
 
 }
