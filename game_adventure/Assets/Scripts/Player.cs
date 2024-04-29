@@ -394,6 +394,7 @@ public class player : MonoBehaviour
     private void Die()
     {
         defeat.SetActive(true);
+        Application.Quit();
     }
 
 }
