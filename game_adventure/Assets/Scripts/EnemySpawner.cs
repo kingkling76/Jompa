@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     public bool OutOfSpawner;
     public bool Kling;
+    public static int BossSpawn =0;
 
     public int numEnemies;
 
@@ -21,31 +22,35 @@ public class EnemySpawner : MonoBehaviour
     {
         if (CastleSpawner && canSpawn)
         {
-            Spawner(numEnemies);
+            Spawner(numEnemies, 0);
         }
         if (OutOfSpawner && canSpawn)
         {
-            Spawner(numEnemies);
+            Spawner(numEnemies, 0);
         }
         if(ChurchPpawner && canSpawn)
         {
 
-            Spawner(numEnemies);
+            Spawner(numEnemies, 0);
         }
         if(Kling)
         {
-            Spawner(numEnemies);
+            Spawner(numEnemies, 0);
+        }
+        if (BossSpawn == 1)
+        {
+            Spawner(numEnemies,1);
         }
 
     }
 
-    private void Spawner(int num)
+    private void Spawner(int num, int index)
     {
 
         int enemiesToSpawn = num; // Number of enemies to spawn
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(enemyPrefab[0], transform.position, Quaternion.identity);
+            Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
             Debug.Log("spawn");
         }
 
@@ -55,5 +60,6 @@ public class EnemySpawner : MonoBehaviour
         ChurchPpawner = false;
         Kling = false;
         OutOfSpawner = false;
+        BossSpawn++;
     }
 }
