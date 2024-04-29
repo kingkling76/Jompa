@@ -28,6 +28,17 @@ public class NPC : MonoBehaviour
     public string[] dialogue_10;
     public string[] dialogue_11;
 
+    public static int SpecialNPC_index = 0;
+    public static int CrossroadNPC_index = 0;
+    public static int ProstNPC_index= 0;
+    public static int MiddleNPC_index = 0;
+    public static int PressisNPC_index = 0;
+    public static int KungNPC_index = 0;
+    public static int LongNPC_index = 0;
+    public static int LinusNPC_index = 0;
+    public static int DagNPC_index = 0;
+    public static int AssistentNPC_index = 0;
+
     int index;
 
     //InputActions for button presses
@@ -54,16 +65,16 @@ public class NPC : MonoBehaviour
 
         //index and options for the dialogue
         dialogue = new string[] { "Hej", "Barev", "Ni Hao", "Yassoo", "Namaste", "Salam", "Hola", "Merhaba", "Privet", "Zdravo" };
-        dialogue_2 = new string[] { "Hassan: Har du hört om den försvunna professorn?", "Skuggan: Riktigt dåligt väder idag?" };
-        dialogue_3 = new string[] { "Proseten: play it cool, gå till kyrkan och rena din själ", "SKuggan: Skit i det jävla mupp" };
-        dialogue_4 = new string[] { "Låt oss se", "SKuggan: Skit i det jävla mupp" };
-        dialogue_5 = new string[] { "Låt oss se", "SKuggan: Skit i det jävla mupp" };
-        dialogue_6 = new string[] { "Låt oss se", "SKuggan: Skit i det jävla mupp" };
-        dialogue_7 = new string[] { "Låt oss se", "SKuggan: Skit i det jävla mupp" };
-        dialogue_8 = new string[] { "Jag är Dag", "SKuggan: Skit i det jävla mupp" };
-        dialogue_9 = new string[] { "ty", "SKuggan: Skit i det jävla mupp" };
-        dialogue_10 = new string[] { "Tack!", "SKuggan: Skit i det jävla mupp" };
-        dialogue_11 = new string[] { "Välkommen tillbaka kungen", "SKuggan: Skit i det jävla mupp" };
+        dialogue_2 = new string[] { "Hassan: Har du hört om den försvunna professorn?", "Skuggan: Han är ändå helt värdelös", "Hassan: Du ser trött ut ", "Skuggan: Lyssna inte på han"};
+        dialogue_3 = new string[] { "Proseten: play it cool, gå till kyrkan och rena din själ", "Skuggan: Gå bara åt höger, strunta i det där" };
+        dialogue_4 = new string[] { "Vilsen student: Har du varit på Pressis?", "Vilsen student: Gå bara uppåt" };
+        dialogue_5 = new string[] { "Väpnaren Jöns: Dom behöver dig på Örebro Slott!", "Skuggan: Alla dessa distraktioner, gå bara tillbaka!", "Väpnare Jöns: Gå bara åt höger så kommer du dit" };
+        dialogue_6 = new string[] { "Klas: Skumma grejjer pågår i T-husets källare", "Klas: Du råkar inte veta något om det?", "Skuggan: Riktig BS" };
+        dialogue_7 = new string[] { "Linus: SLÄPP IN MIG!!!!", "Linus: Jag missar min tenta, HJÄLP MIG!", "Linus: Kan du ta sönder dörren?", "Skuggan: Det är nog bäst att du hjälper honom" };
+        dialogue_8 = new string[] { "Dag: Jag har glömt koden till teknikmuseet", "Dag: Jag verkar vara ett instabilt system", "Dag: Någon student borde kanske komma ihåg koden" };
+        dialogue_9 = new string[] { "Pär präst: Du städar upp din egna röra men tack", "Skuggan: Struntprat" };
+        dialogue_10 = new string[] { "Kungen: Det är du ditt kräk! Försvinn!!", "Skuggan: Han vet inte vad han pratar om" };
+        dialogue_11 = new string[] { "Välkommen tillbaka kungen", "Skuggan: Det är fullbordat..." };
 
 
 
@@ -149,50 +160,74 @@ public class NPC : MonoBehaviour
         index = Random.Range(0, 10);
         if (tag == "Special_NPC")
         {
-            index = Random.Range(0, 2);
+            //index = Random.Range(0, 2);
+            index = SpecialNPC_index;
+            SpecialNPC_index++;
+            if(index == 3)
+            {
+                SpecialNPC_index = 0;
+            }
         }
         if(tag == "Crossroads_NPC")
         {
-            index = Random.Range(0, 2);
+            index = CrossroadNPC_index;
+            CrossroadNPC_index++;
+            if(index == 1) CrossroadNPC_index = 0;
         }
         if(tag == "Middle_NPC")
         {
-            index = Random.Range(0, 2);
+            index = MiddleNPC_index;
+            MiddleNPC_index++;
+            if(index == 1) MiddleNPC_index = 0;
 
         }
         if (tag == "Pressis_NPC")
         {
-            index = Random.Range(0, 2);
+            index = PressisNPC_index;
+            PressisNPC_index++;
+            if(index == 2) PressisNPC_index = 0;
 
         }
         if (tag == "Long_NPC")
         {
-            index = Random.Range(0, 2);
+            index = LongNPC_index;
+            LongNPC_index++;
+            if(index ==2) LongNPC_index = 0;
 
         }
         if (tag == "Linus")
         {
-            index = Random.Range(0, 2);
+            index = LinusNPC_index;
+            LinusNPC_index++;
+            if(index == 3) LinusNPC_index = 0;
 
         }
         if (tag == "Dag")
         {
-            index = Random.Range(0, 2);
+            index = DagNPC_index;
+            DagNPC_index++;
+            if(index == 2) DagNPC_index = 0;
 
         }
         if (tag == "prost")
         {
-            index = Random.Range(0, 2);
+            index = ProstNPC_index;
+            ProstNPC_index++;
+            if(index == 1) ProstNPC_index = 0;
 
         }
         if (tag == "Kung")
         {
-            index = Random.Range(0, 2);
+            index = KungNPC_index;
+            KungNPC_index++;
+            if(index == 1) KungNPC_index = 0;
 
         }
         if (tag == "assistent")
         {
-            index = Random.Range(0, 2);
+            index = AssistentNPC_index;
+            AssistentNPC_index++;
+            if(index == 1) AssistentNPC_index = 0;
 
         }
 
@@ -213,7 +248,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_2[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if(tag == "Crossroads_NPC")
@@ -221,7 +256,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_3[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Middle_NPC")
@@ -229,7 +264,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_4[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Pressis_NPC")
@@ -237,7 +272,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_5[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Long_NPC")
@@ -245,7 +280,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_6[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Linus")
@@ -253,7 +288,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_7[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Dag")
@@ -261,7 +296,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_8[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "prost")
@@ -269,7 +304,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_9[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "Kung")
@@ -277,7 +312,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_10[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else if (tag == "assistent")
@@ -285,7 +320,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue_11[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
         else
@@ -293,7 +328,7 @@ public class NPC : MonoBehaviour
             foreach (char letter in dialogue[index].ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return new WaitForSeconds(0.06f);
+                yield return new WaitForSeconds(0.03f);
             }
         }
     }
