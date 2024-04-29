@@ -298,7 +298,7 @@ public class player : MonoBehaviour
         {
             Debug.Log("TRÄFF");
             Debug.Log("Hit: " + hit.collider.name);
-            if (hit.collider.CompareTag("NPC"))
+            if (hit.collider.CompareTag("NPC") || hit.collider.CompareTag("Special_NPC") || hit.collider.CompareTag("Crossroads_NPC")|| hit.collider.CompareTag("Middle_NPC")|| hit.collider.CompareTag("Pressis_NPC") || hit.collider.CompareTag("Long_NPC")|| hit.collider.CompareTag("Linus") || hit.collider.CompareTag("Dag")||hit.collider.CompareTag("prost") || hit.collider.CompareTag("Kung") || hit.collider.CompareTag("assistent"))
             {
                 talking = true;
                 NPC npc = hit.collider.GetComponent<NPC>();

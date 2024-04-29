@@ -8,14 +8,17 @@ public class move_in_pressis : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("jalla");
+        if (other.tag == "Player")
+        {
+            Debug.Log("jalla");
 
 
 
-        player.instance.transform.position = new Vector3(-101.69f, 26.187f, 0f);
+            player.instance.transform.position = new Vector3(-101.69f, 26.187f, 0f);
 
-        player.instance.is_moving = false;
-        player.instance.targetPos = player.instance.transform.position;
+            player.instance.is_moving = false;
+            player.instance.targetPos = player.instance.transform.position;
+        }
 
 
     }

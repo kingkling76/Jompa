@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.2815492, y: 1.720322, z: -0.03750701}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_SortingLayerID: 457365507
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1404395133, guid: fe61f179b122f4642b9003d09fc47c04, type: 3}
+  m_Sprite: {fileID: -304517500, guid: 5fbb702901fa22b4c952763b7dc5322b, type: 3}
   m_Color: {r: 0.990566, g: 0.051397298, b: 0.051397298, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,16 +161,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.23581713}
+  m_Offset: {x: 0.011110336, y: -0.027496994}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 0.48, y: 0.48}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5283657}
+  m_Size: {x: 0.26671338, y: 0.33399725}
   m_EdgeRadius: 0

@@ -11,6 +11,16 @@ TagManager:
   - Penn
   - NPC
   - Event
+  - Special_NPC
+  - Crossroads_NPC
+  - Middle_NPC
+  - Pressis_NPC
+  - Long_NPC
+  - Linus
+  - Dag
+  - prost
+  - Kung
+  - assistent
   layers:
   - Default
   - TransparentFX

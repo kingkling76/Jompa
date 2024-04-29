@@ -9,14 +9,17 @@ public class move : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("jalla");
+        if (other.tag == "Player")
+        {
+            Debug.Log("jalla");
 
-        spawner.OutOfSpawner = true;
-       
-        player.instance.transform.position = new Vector3(-44.5f, -4.5f, 0f);
+            spawner.OutOfSpawner = true;
 
-        player.instance.is_moving = false;
-        player.instance.targetPos = player.instance.transform.position;
+            player.instance.transform.position = new Vector3(-44.5f, -4.5f, 0f);
+
+            player.instance.is_moving = false;
+            player.instance.targetPos = player.instance.transform.position;
+        }
 
 
     }
