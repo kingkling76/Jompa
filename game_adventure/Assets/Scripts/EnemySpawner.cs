@@ -48,10 +48,13 @@ public class EnemySpawner : MonoBehaviour
     {
 
         int enemiesToSpawn = num; // Number of enemies to spawn
+        if(enemiesToSpawn == 0) enemiesToSpawn=1;
+        Debug.Log("Enemies to spawn");
+        Debug.Log(enemiesToSpawn);
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab[index], transform.position, Quaternion.identity);
-            Debug.Log("spawn");
+            Debug.Log("sadana");
         }
 
         // Stop spawning after spawning 10 enemies

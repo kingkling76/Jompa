@@ -153,7 +153,7 @@ public class player : MonoBehaviour
             // Rotate the penn object to face the attack direction
             penn.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            Destroy(penn.gameObject, 0.2f);
+            Destroy(penn.gameObject, 0.15f);
 
         }
     }
